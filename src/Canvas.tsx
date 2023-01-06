@@ -1,26 +1,36 @@
 import { useRef } from 'react';
-import { beginDrawing, drawTo, endDrawing, clearCanvas } from './helpers/draw';
+import { CanvasDrawer } from './helpers/CanvasDrawer';
+import { socket } from './helpers/socketio';
 
 export function Canvas() {
   const strokeWidth = 5;
   const canvas = useRef<HTMLCanvasElement>(null);
+  CanvasDrawer.setUp(canvas);
 
   const handleMouseDown = (
     event: React.MouseEvent<HTMLCanvasElement>
   ): void => {
     const { offsetX, offsetY } = event.nativeEvent;
-    beginDrawing(canvas, offsetX, offsetY);
+    CanvasDrawer.beginDrawing(offsetX, offsetY);
+    socket.emit('beginDrawing', offsetX, offsetY);
   };
 
   const handleMouseMove = (
     event: React.MouseEvent<HTMLCanvasElement>
   ): void => {
     const { offsetX, offsetY } = event.nativeEvent;
-    drawTo(canvas, offsetX, offsetY, strokeWidth);
+    CanvasDrawer.drawTo(offsetX, offsetY, strokeWidth);
+    socket.emit('drawTo', offsetX, offsetY, strokeWidth);
   };
 
   const handleMouseUp = (): void => {
-    endDrawing();
+    CanvasDrawer.endDrawing();
+    socket.emit('endDrawing');
+  };
+
+  const clearCanvas = (): void => {
+    CanvasDrawer.clearCanvas();
+    socket.emit('clearCanvas');
   };
 
   return (
@@ -33,7 +43,8 @@ export function Canvas() {
         width="500"
         height="400"
       ></canvas>
-      <button onClick={() => clearCanvas(canvas)}>Clear Canvas</button>
+      <button onClick={clearCanvas}>Clear Canvas</button>
+      <button onClick={() => socket.emit('hello')}>Hello</button>
     </>
   );
 }
