@@ -3,7 +3,8 @@ import { ClientToServerEvents, ServerToClientEvents } from '../types/socketio';
 import { CanvasDrawer } from './CanvasDrawer';
 
 export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-  'http://localhost:5555'
+  'https://sham-illustrator-server-production.up.railway.app/'
+  //'http://localhost:5555'
 );
 
 socket.on('connect', () => {

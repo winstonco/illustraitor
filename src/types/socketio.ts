@@ -10,6 +10,9 @@ export interface ServerToClientEvents extends IDraw {
 
 export interface ClientToServerEvents extends IDraw {
   hello: () => void; // temp
+  createLobby: (name: string, size?: number) => boolean;
+  joinLobby: (name: string) => boolean;
+  leaveLobby: (name: string) => boolean;
 }
 
 export interface InterServerEvents {

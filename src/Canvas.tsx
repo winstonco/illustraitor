@@ -45,6 +45,21 @@ export function Canvas() {
       ></canvas>
       <button onClick={clearCanvas}>Clear Canvas</button>
       <button onClick={() => socket.emit('hello')}>Hello</button>
+      <button
+        onClick={() => socket.emit('joinLobby', prompt('name') ?? 'temp')}
+      >
+        Join Lobby
+      </button>
+      <button
+        onClick={() => socket.emit('createLobby', prompt('name') ?? 'temp')}
+      >
+        Create Lobby
+      </button>
+      <button
+        onClick={() => socket.emit('leaveLobby', prompt('name') ?? 'temp')}
+      >
+        Leave Lobby
+      </button>
     </>
   );
 }
