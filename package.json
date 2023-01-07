@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "npm i typescript && tsc && vite build",
     "preview": "vite preview",
-    "start": "npm serve dist"
+    "start": "serve dist"
   },
   "dependencies": {
     "react": "^18.2.0",
