@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm i typescript && tsc && vite build",
+    "build": "npm i typescript serve && tsc && vite build",
     "preview": "vite preview",
     "start": "serve dist"
   },
