@@ -11,6 +11,7 @@ socket.on('connect', () => {
 });
 
 socket.on('disconnect', () => {
+  console.log('Disconnected');
   console.log(socket.id); // undefined
 });
 
