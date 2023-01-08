@@ -5,7 +5,7 @@ import IDraw from './IDraw';
 import { GameRole } from './roles';
 
 interface ServerToClientEvents extends IDraw {
-  readyCheck: (callback: (err: Error, responses: 'ok') => void) => void;
+  readyCheck: (callback: (err: Error | null, responses: 'ok') => void) => void;
   startGame: () => void;
   role: (role: GameRole) => void;
   prompt: (prompt: string) => void;
@@ -18,6 +18,7 @@ interface ClientToServerEvents extends IDraw {
   createLobby: (lobbyName: string, lobbySize?: number) => void;
   joinLobby: (lobbyName: string) => void;
   leaveLobby: (lobbyName: string) => void;
+  startGame: (lobbyName: string) => void;
 }
 
 export type { ServerToClientEvents, ClientToServerEvents };

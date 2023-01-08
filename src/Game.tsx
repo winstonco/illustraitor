@@ -14,10 +14,12 @@ export default function Game(): JSX.Element {
 
     socket.on('role', (role) => {
       setRole(role);
+      console.log(role);
     });
 
     socket.on('prompt', (prompt) => {
       setPrompt(prompt);
+      console.log(prompt);
     });
 
     socket.on('startTurn', () => {
@@ -55,6 +57,13 @@ export default function Game(): JSX.Element {
         }
       >
         Leave Lobby
+      </button>
+      <button
+        onClick={() =>
+          socket.emit('startGame', window.prompt('name') ?? 'temp')
+        }
+      >
+        Start
       </button>
     </>
   );

@@ -18,8 +18,8 @@ socket.on('beginDrawing', CanvasDrawer.beginDrawing);
 socket.on('drawTo', CanvasDrawer.drawTo);
 socket.on('endDrawing', CanvasDrawer.endDrawing);
 socket.on('clearCanvas', CanvasDrawer.clearCanvas);
-// socket.on('readyCheck', (callback) => {
-//   callback(new Error(), 'ok');
-// });
+socket.on('readyCheck', (callback) => {
+  callback(null, 'ok');
+});
 
 export { socket };
