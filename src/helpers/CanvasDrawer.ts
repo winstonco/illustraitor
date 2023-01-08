@@ -1,4 +1,4 @@
-// "implements" IDraw
+// "implements" IDraw but with static methods
 export class CanvasDrawer {
   static isDrawing: boolean;
   static canvas: React.RefObject<HTMLCanvasElement>;

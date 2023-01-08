@@ -1,10 +1,9 @@
-import { io, Socket } from 'socket.io-client';
-import { ClientToServerEvents, ServerToClientEvents } from '../types/socketio';
+import { io } from 'socket.io-client';
+import { GameSocket } from '../types/socketio';
 import { CanvasDrawer } from './CanvasDrawer';
 
-export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-  'https://sham-illustrator-server-production.up.railway.app/'
-  //'http://localhost:5555'
+const socket: GameSocket = io(
+  import.meta.env.VITE_SERVER_URL ?? 'http://localhost:5555'
 );
 
 socket.on('connect', () => {
@@ -19,3 +18,8 @@ socket.on('beginDrawing', CanvasDrawer.beginDrawing);
 socket.on('drawTo', CanvasDrawer.drawTo);
 socket.on('endDrawing', CanvasDrawer.endDrawing);
 socket.on('clearCanvas', CanvasDrawer.clearCanvas);
+// socket.on('readyCheck', (callback) => {
+//   callback(new Error(), 'ok');
+// });
+
+export { socket };

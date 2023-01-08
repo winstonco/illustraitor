@@ -1,25 +1,26 @@
 // https://socket.io/docs/v4/typescript/
 
-import { IDraw } from './IDraw';
+import { Socket } from 'socket.io-client';
+import IDraw from './IDraw';
+import { GameRole } from './roles';
 
-export interface ServerToClientEvents extends IDraw {
-  noArg: () => void;
-  basicEmit: (a: number, b: string, c: Buffer) => void;
-  withAck: (d: string, callback: (e: number) => void) => void;
+interface ServerToClientEvents extends IDraw {
+  readyCheck: (callback: (err: Error, responses: 'ok') => void) => void;
+  startGame: () => void;
+  role: (role: GameRole) => void;
+  prompt: (prompt: string) => void;
+  startTurn: () => void;
+  endTurn: () => void;
 }
 
-export interface ClientToServerEvents extends IDraw {
-  hello: () => void; // temp
-  createLobby: (name: string, size?: number) => boolean;
-  joinLobby: (name: string) => boolean;
-  leaveLobby: (name: string) => boolean;
+interface ClientToServerEvents extends IDraw {
+  hello: () => void;
+  createLobby: (lobbyName: string, lobbySize?: number) => void;
+  joinLobby: (lobbyName: string) => void;
+  leaveLobby: (lobbyName: string) => void;
 }
 
-export interface InterServerEvents {
-  ping: () => void;
-}
+export type { ServerToClientEvents, ClientToServerEvents };
 
-export interface SocketData {
-  name: string;
-  age: number;
-}
+export interface GameSocket
+  extends Socket<ServerToClientEvents, ClientToServerEvents> {}
