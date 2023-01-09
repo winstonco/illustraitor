@@ -1,13 +1,18 @@
 import { useState } from 'react';
+import { Stack } from '@mui/system';
+
 import Canvas from './Canvas';
-import { socket } from './helpers/socketio';
-import { GameRole } from './types/roles';
+import CanvasNav from './CanvasNav';
+import socket from './helpers/socket';
+import { GameRole } from './types/GameRole';
 
 export default function Game(): JSX.Element {
   // Whether client is in a room/lobby
-  const [roomy, setRoomy] = useState<boolean>(false);
   const [role, setRole] = useState<GameRole>('real');
   const [prompt, setPrompt] = useState<string>('');
+
+  const [penSize, setPenSize] = useState(5);
+  const [penColor, setPenColor] = useState('black');
 
   socket.on('startGame', () => {
     console.log('Game starting now!');
@@ -32,39 +37,14 @@ export default function Game(): JSX.Element {
   });
 
   return (
-    <>
-      <div className="game">
-        <Canvas></Canvas>
-      </div>
-      <button onClick={() => socket.emit('hello')}>Hello</button>
-      <button
-        onClick={() =>
-          socket.emit('joinLobby', window.prompt('name') ?? 'temp')
-        }
-      >
-        Join Lobby
-      </button>
-      <button
-        onClick={() =>
-          socket.emit('createLobby', window.prompt('name') ?? 'temp')
-        }
-      >
-        Create Lobby
-      </button>
-      <button
-        onClick={() =>
-          socket.emit('leaveLobby', window.prompt('name') ?? 'temp')
-        }
-      >
-        Leave Lobby
-      </button>
-      <button
-        onClick={() =>
-          socket.emit('startGame', window.prompt('name') ?? 'temp')
-        }
-      >
-        Start
-      </button>
-    </>
+    <div className="game">
+      <Stack spacing={1}>
+        <Canvas penSize={penSize} penColor={penColor}></Canvas>
+        <CanvasNav
+          setPenSize={setPenSize}
+          setPenColor={setPenColor}
+        ></CanvasNav>
+      </Stack>
+    </div>
   );
 }

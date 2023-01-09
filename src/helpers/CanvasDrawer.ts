@@ -15,9 +15,15 @@ export class CanvasDrawer {
     ctx?.moveTo(startX, startY);
   };
 
-  static drawTo = (toX: number, toY: number, width = 1): void => {
+  static drawTo = (
+    toX: number,
+    toY: number,
+    width = 1,
+    color = 'black'
+  ): void => {
     if (CanvasDrawer.isDrawing) {
       const ctx = CanvasDrawer.canvas.current!.getContext('2d');
+      ctx!.strokeStyle = color;
       ctx!.lineWidth = width;
       ctx?.lineTo(toX, toY);
       ctx?.stroke();

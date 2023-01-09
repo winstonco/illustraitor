@@ -1,9 +1,10 @@
+import { Box } from '@mui/system';
 import { useRef } from 'react';
-import { CanvasDrawer } from './helpers/CanvasDrawer';
-import { socket } from './helpers/socketio';
 
-export default function Canvas() {
-  const strokeWidth = 5;
+import { CanvasDrawer } from './helpers/CanvasDrawer';
+import socket from './helpers/socket';
+
+export default function Canvas(props: { penSize: number; penColor: string }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   CanvasDrawer.setUp(canvas);
   let drawing: boolean = false;
@@ -23,8 +24,8 @@ export default function Canvas() {
   ): void => {
     if (drawing) {
       const { offsetX, offsetY } = event.nativeEvent;
-      CanvasDrawer.drawTo(offsetX, offsetY, strokeWidth);
-      socket.emit('drawTo', offsetX, offsetY, strokeWidth);
+      CanvasDrawer.drawTo(offsetX, offsetY, props.penSize, props.penColor);
+      socket.emit('drawTo', offsetX, offsetY, props.penSize, props.penColor);
     }
   };
 
@@ -34,13 +35,8 @@ export default function Canvas() {
     socket.emit('endDrawing');
   };
 
-  const clearCanvas = (): void => {
-    CanvasDrawer.clearCanvas();
-    socket.emit('clearCanvas');
-  };
-
   return (
-    <>
+    <Box sx={{ border: 3, height: 400 }}>
       <canvas
         ref={canvas}
         onMouseDown={handleMouseDown}
@@ -49,7 +45,6 @@ export default function Canvas() {
         width="500"
         height="400"
       ></canvas>
-      <button onClick={clearCanvas}>Clear Canvas</button>
-    </>
+    </Box>
   );
 }

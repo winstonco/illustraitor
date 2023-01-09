@@ -1,5 +1,6 @@
 import { io } from 'socket.io-client';
-import { GameSocket } from '../types/socketio';
+
+import { GameSocket } from '../types/SocketIOEvents';
 import { CanvasDrawer } from './CanvasDrawer';
 
 const socket: GameSocket = io(
@@ -23,4 +24,4 @@ socket.on('readyCheck', (callback) => {
   callback(null, 'ok');
 });
 
-export { socket };
+export default socket;
