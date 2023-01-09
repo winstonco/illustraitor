@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { CanvasDrawer } from './helpers/CanvasDrawer';
 import socket from './helpers/socket';
@@ -8,6 +8,12 @@ export default function Canvas(props: { penSize: number; penColor: string }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   CanvasDrawer.setUp(canvas);
   let drawing: boolean = false;
+
+  const [canvasWidth, setCanvasWidth] = useState<number>(0);
+  const box = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (box.current) setCanvasWidth(box.current.offsetWidth);
+  }, [canvasWidth]);
 
   const handleMouseDown = (
     event: React.MouseEvent<HTMLCanvasElement>
@@ -36,14 +42,15 @@ export default function Canvas(props: { penSize: number; penColor: string }) {
   };
 
   return (
-    <Box sx={{ border: 3, height: 400 }}>
+    <Box ref={box} sx={{ maxWidth: 'md', border: 3, height: 400 }}>
       <canvas
+        style={{ touchAction: 'none', maxWidth: 'md' }}
         ref={canvas}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        width="594"
-        height="400"
+        height={400}
+        width={canvasWidth - 6}
       ></canvas>
     </Box>
   );

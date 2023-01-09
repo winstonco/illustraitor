@@ -36,6 +36,13 @@ export class CanvasDrawer {
 
   static clearCanvas = (): void => {
     console.log('Cleared!');
-    CanvasDrawer.canvas.current?.getContext('2d')?.clearRect(0, 0, 500, 400);
+    CanvasDrawer.canvas.current
+      ?.getContext('2d')
+      ?.clearRect(
+        0,
+        0,
+        CanvasDrawer.canvas.current.width,
+        CanvasDrawer.canvas.current.height
+      );
   };
 }

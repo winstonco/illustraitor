@@ -1,4 +1,3 @@
-import { Chip } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import socket from './helpers/socket';
@@ -19,5 +18,5 @@ export default function Timer(): JSX.Element {
     setTime(turnTime);
   });
 
-  return <Chip label={time} />;
+  return <p style={{ fontSize: '30px' }}>{time}</p>;
 }
