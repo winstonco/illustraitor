@@ -38,7 +38,7 @@ export default function Game(): JSX.Element {
 
   return (
     <div className="game">
-      <Stack spacing={1}>
+      <Stack spacing={1} maxWidth={606}>
         <Canvas penSize={penSize} penColor={penColor}></Canvas>
         <CanvasNav
           setPenSize={setPenSize}

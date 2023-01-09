@@ -8,13 +8,13 @@ function App() {
   const [roomy, setRoomy] = useState<boolean>(false);
 
   return (
-    <div className="App">
-      <h1>Sham Illustrator</h1>
-      <Stack maxWidth="md" spacing={1}>
+    <Stack maxWidth="sm" spacing={1}>
+      <div className="App">
+        <h1>Sham Illustrator</h1>
         <GameNav setRoomy={setRoomy}></GameNav>
         <Game></Game>
-      </Stack>
-    </div>
+      </div>
+    </Stack>
   );
 }
 

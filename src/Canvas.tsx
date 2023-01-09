@@ -42,7 +42,7 @@ export default function Canvas(props: { penSize: number; penColor: string }) {
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        width="500"
+        width="594"
         height="400"
       ></canvas>
     </Box>
