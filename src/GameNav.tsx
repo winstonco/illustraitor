@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button, ButtonGroup } from '@mui/material';
 import { Stack } from '@mui/system';
 
@@ -7,6 +8,9 @@ import Timer from './Timer';
 export default function GameNav(props: {
   setRoomy: React.Dispatch<React.SetStateAction<boolean>>;
 }): JSX.Element {
+  // replace with cookies?
+  const [lobbyName, setLobbyName] = useState<string>('');
+
   return (
     <div className="game-nav">
       <Stack
@@ -23,33 +27,33 @@ export default function GameNav(props: {
           sx={{ borderColor: 'black' }}
         >
           <Button
-            onClick={() =>
-              socket.emit(
-                'joinLobby',
-                window.prompt('name') ?? 'temp',
-                (res) => {
+            onClick={() => {
+              const name = window.prompt('Lobby Name');
+              if (name) {
+                setLobbyName(name);
+                socket.emit('joinLobby', name, (res) => {
                   if (res === 'ok') {
                     console.log('Successfully joined lobby!');
                     props.setRoomy(true);
                   }
-                }
-              )
-            }
+                });
+              }
+            }}
           >
             Join Lobby
           </Button>
           <Button
-            onClick={() =>
-              socket.emit(
-                'createLobby',
-                window.prompt('name') ?? 'temp',
-                (res) => {
+            onClick={() => {
+              const name = window.prompt('Lobby Name');
+              if (name) {
+                setLobbyName(name);
+                socket.emit('createLobby', name, (res) => {
                   if (res === 'ok') {
                     console.log('Successfully created lobby!');
                   }
-                }
-              )
-            }
+                });
+              }
+            }}
           >
             Create Lobby
           </Button>
@@ -66,9 +70,11 @@ export default function GameNav(props: {
             Leave Lobby
           </Button>
           <Button
-            onClick={() =>
-              socket.emit('startGame', window.prompt('name') ?? 'temp')
-            }
+            onClick={() => {
+              if (lobbyName !== '') {
+                socket.emit('startGame', lobbyName);
+              }
+            }}
           >
             Start
           </Button>
