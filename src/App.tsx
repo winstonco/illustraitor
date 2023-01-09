@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Stack } from '@mui/system';
 
-import './css/app.css';
 import Game from './Game';
 import GameNav from './GameNav';
 
