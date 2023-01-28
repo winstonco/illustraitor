@@ -6,7 +6,7 @@ import socket from './helpers/socket';
 import PenSize from './PenSize';
 import PenColor from './PenColor';
 
-export default function CanvasNav(props: {
+export default function Toolbar(props: {
   setPenSize: React.Dispatch<React.SetStateAction<number>>;
   setPenColor: React.Dispatch<React.SetStateAction<string>>;
 }): JSX.Element {

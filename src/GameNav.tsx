@@ -1,20 +1,25 @@
-import { useState } from 'react';
 import { Button, ButtonGroup } from '@mui/material';
 import { Stack } from '@mui/system';
 
 import socket from './helpers/socket';
 import Timer from './Timer';
 
-export default function GameNav(props: {
-  setRoomy: React.Dispatch<React.SetStateAction<boolean>>;
+export default function GameNav({
+  lobbyName,
+  setLobbyName,
+  role,
+  prompt,
+}: {
+  lobbyName: string;
+  setLobbyName: React.Dispatch<React.SetStateAction<string>>;
+  role: string;
+  prompt: string;
 }): JSX.Element {
-  // replace with cookies?
-  const [lobbyName, setLobbyName] = useState<string>('');
-  socket.on('connect', () => setLobbyName(''));
-
   return (
     <div className="game-nav">
       <h2>In Lobby: {lobbyName}</h2>
+      <h2>Role: {role}</h2>
+      <h2>Prompt: {prompt}</h2>
       <Stack
         direction="row"
         spacing={2}
@@ -52,7 +57,6 @@ export default function GameNav(props: {
                   if (res === 'ok') {
                     console.log('Successfully joined lobby!');
                     setLobbyName(name);
-                    props.setRoomy(true);
                     return;
                   } else {
                     console.log('Failed to join lobby!');
@@ -69,7 +73,6 @@ export default function GameNav(props: {
                 socket.emit('leaveLobby', (res) => {
                   if (res === 'ok') {
                     console.log('Successfully left lobby!');
-                    props.setRoomy(false);
                     setLobbyName('');
                     return;
                   } else {
