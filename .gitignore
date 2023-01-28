@@ -18,6 +18,7 @@ typings/
 
 # dotenv environment variables file
 .env
+.env.development
 .env.test
 
 # Editor directories and files
