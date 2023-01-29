@@ -34,6 +34,7 @@ export default function Join() {
       setLobbyName(code);
       navigate('/play');
     } else {
+      window.alert('Failed to join lobby!');
       navigate('/');
     }
   }, []);
