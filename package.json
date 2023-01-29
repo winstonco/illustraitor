@@ -7,13 +7,14 @@
     "dev": "vite",
     "build": "npm i && tsc && vite build",
     "preview": "vite preview",
-    "start": "node index.js"
+    "start": "node src/index.js"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.3",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "nanoid": "^4.0.0",
     "react": "^18.2.0",
