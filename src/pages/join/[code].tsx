@@ -34,7 +34,7 @@ export default function Join() {
       setLobbyName(code);
       navigate('/play');
     } else {
-      navigate('/home');
+      navigate('/');
     }
   }, []);
 
