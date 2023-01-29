@@ -1,55 +1,65 @@
-import { useState } from 'react';
 import { Stack, Container } from '@mui/system';
+import { useEffect, useState } from 'react';
+import { Outlet, useOutletContext } from 'react-router-dom';
 
-import Game from './Game';
-import GameNav from './GameNav';
 import socket from './helpers/socket';
 
-function App() {
+export default function App() {
   const [role, setRole] = useState<string>('Real');
   const [prompt, setPrompt] = useState<string>('');
   const [lobbyName, setLobbyName] = useState<string>('');
 
-  socket.on('connect', () => setLobbyName(''));
-
-  socket.on('startGame', () => {
-    console.log('Game starting now!');
-
-    socket.on('role', (role) => {
-      setRole(role === 'real' ? 'Real' : 'Imposter');
-      console.log(role);
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log(socket.id);
     });
 
-    socket.on('prompt', (prompt) => {
-      setPrompt(prompt);
-      console.log(prompt);
+    socket.on('disconnect', () => {
+      console.log('Disconnected');
+      console.log(socket.id); // undefined
     });
 
-    socket.on('startTurn', () => {
-      console.log("It's your turn!");
-    });
-
-    socket.on('endTurn', () => {
-      console.log('Your turn ended!');
-    });
-  });
+    return () => {
+      socket.removeAllListeners('connect');
+      socket.removeAllListeners('disconnect');
+    };
+  }, []);
 
   return (
     <Container sx={{ display: 'flex', justifyContent: 'center' }}>
       <Stack spacing={1}>
         <div className="App">
           <h1>Sham Illustrator</h1>
-          <GameNav
-            role={role}
-            prompt={prompt}
-            lobbyName={lobbyName}
-            setLobbyName={setLobbyName}
+          <Outlet
+            context={{
+              roleContext: [role, setRole],
+              promptContext: [prompt, setPrompt],
+              lobbyNameContext: [lobbyName, setLobbyName],
+            }}
           />
-          <Game />
         </div>
       </Stack>
     </Container>
   );
 }
 
-export default App;
+type ContextType = {
+  roleContext: [string, React.Dispatch<React.SetStateAction<string>>];
+  promptContext: [string, React.Dispatch<React.SetStateAction<string>>];
+  lobbyNameContext: [string, React.Dispatch<React.SetStateAction<string>>];
+};
+
+export const useRole = () => {
+  const { roleContext } = useOutletContext<ContextType>();
+  return roleContext;
+};
+
+export const usePrompt = () => {
+  const { promptContext } = useOutletContext<ContextType>();
+  return promptContext;
+};
+
+export const useLobbyName = () => {
+  const { lobbyNameContext } = useOutletContext<ContextType>();
+  return lobbyNameContext;
+};

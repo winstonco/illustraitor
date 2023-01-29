@@ -6,18 +6,20 @@ export default function Timer(): JSX.Element {
   const [time, setTime] = useState<number>(0);
   const [targetTime, setTargetTime] = useState<number>(Date.now());
 
-  socket.on('startTurn', (turnTime) => {
-    console.log(turnTime);
-    setTargetTime(Date.now() + turnTime * 1000);
-    setTime(turnTime);
-  });
+  useEffect(() => {
+    socket.on('startTurn', (turnTime) => {
+      setTargetTime(Date.now() + turnTime * 1000);
+      setTime(turnTime);
+    });
+
+    return () => {
+      socket.removeAllListeners('startTurn');
+    };
+  }, []);
 
   useEffect(() => {
-    console.log((targetTime - Date.now()) / 1000);
-
     if (targetTime - Date.now() > 0) {
       setTimeout(() => {
-        console.log(Math.ceil((targetTime - Date.now()) / 1000));
         setTime(Math.ceil((targetTime - Date.now()) / 1000));
         // time--;
       }, 1000);

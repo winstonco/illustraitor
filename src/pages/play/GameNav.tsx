@@ -1,25 +1,43 @@
 import { Button, ButtonGroup } from '@mui/material';
 import { Stack } from '@mui/system';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
-import socket from './helpers/socket';
-import Timer from './Timer';
+import socket from '../../helpers/socket';
+import Timer from '../../Timer';
 
 export default function GameNav({
   lobbyName,
   setLobbyName,
   role,
   prompt,
+  currentPlayerName,
 }: {
   lobbyName: string;
   setLobbyName: React.Dispatch<React.SetStateAction<string>>;
   role: string;
   prompt: string;
+  currentPlayerName: string;
 }): JSX.Element {
+  const handleGetLink = () => {
+    let inviteLink = `${window.location.protocol}//${window.location.hostname}`;
+    if (window.location.hostname === 'localhost')
+      inviteLink += `:${window.location.port}`;
+    inviteLink += `/join/${lobbyName}`;
+    console.log(inviteLink);
+    navigator.clipboard.writeText(inviteLink);
+  };
+
   return (
     <div className="game-nav">
       <h2>In Lobby: {lobbyName}</h2>
       <h2>Role: {role}</h2>
       <h2>Prompt: {prompt}</h2>
+      <h2>Current Player: {currentPlayerName}</h2>
+      <h3>
+        <Button onClick={handleGetLink}>
+          <ContentCopyIcon /> Copy Invite Link
+        </Button>
+      </h3>
       <Stack
         direction="row"
         spacing={2}
