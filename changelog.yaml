@@ -1,0 +1,25 @@
+# version: string;
+# note?: string;
+# updates: {}
+#   added?: string[];
+#   changed?: string[];
+#   deprecated?: string[];
+#   removed?: string[];
+#   fixed?: string[];
+#   security?: string[];
+
+---
+meta: { about: 'A party game where everyone is an artist,
+      but one player is a fake. Every player is given the same prompt,
+      except the imposter (they get nothing). In a random order,
+      each player has a short time to add to the collective drawing. At the end of the game,
+      the goal is to guess who is the imposter.', tags: [party] }
+
+versions:
+  [
+    {
+      version: 0.0.0,
+      note: Versions starting now.,
+      updates: [{ type: Added, list: [Changelog, Settings (todo)] }],
+    },
+  ]

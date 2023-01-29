@@ -1,6 +1,9 @@
 import express from 'express';
+import cors from 'cors';
 import path from 'path';
 import * as dotenv from 'dotenv';
+import * as yaml from 'js-yaml';
+import * as fs from 'fs';
 
 const dotenvPath = path.resolve(
   process.cwd(),
@@ -17,8 +20,19 @@ const app = express();
 
 app.use(express.static('dist'));
 
+app.use(
+  cors({
+    origin: '*',
+  })
+);
+
 // https://ui.dev/react-router-cannot-get-url-refresh
-app.get('/*', function (req, res) {
+app.get('/changelog', (req, res) => {
+  const changelog = yaml.load(fs.readFileSync('./changelog.yaml', 'utf-8'));
+  res.status(200).send(changelog);
+});
+
+app.get('/*', (req, res) => {
   res.sendFile(path.resolve(process.cwd(), 'dist/index.html'), (err) => {
     if (err) {
       res.status(500).send(err);
