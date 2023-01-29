@@ -3,7 +3,7 @@ import { Stack } from '@mui/system';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 import socket from '../../helpers/socket';
-import Timer from '../../Timer';
+import Timer from './Timer';
 
 export default function GameNav({
   lobbyName,

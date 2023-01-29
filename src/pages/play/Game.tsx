@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Stack } from '@mui/system';
 
-import Canvas from '../../Canvas';
-import Toolbar from '../../Toolbar';
+import Canvas from './canvas/Canvas';
+import Toolbar from './canvas/Toolbar';
 import socket from '../../helpers/socket';
 import { CanvasDrawer } from '../../helpers/CanvasDrawer';
 

@@ -9,7 +9,6 @@ export default function Login({
   const [name, setName] = useState<string>('');
 
   const handleChange = (ev: ChangeEvent<HTMLInputElement>) => {
-    console.log(ev.target.value);
     setName(ev.target.value);
   };
 

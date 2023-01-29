@@ -1,8 +1,8 @@
 import { Button } from '@mui/material';
 import { Stack } from '@mui/system';
 
-import { CanvasDrawer } from './helpers/CanvasDrawer';
-import socket from './helpers/socket';
+import { CanvasDrawer } from '../../../helpers/CanvasDrawer';
+import socket from '../../../helpers/socket';
 import PenSize from './PenSize';
 import PenColor from './PenColor';
 

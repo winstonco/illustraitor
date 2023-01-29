@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import socket from './helpers/socket';
+import socket from '../../helpers/socket';
 
 export default function Timer(): JSX.Element {
   const [time, setTime] = useState<number>(0);

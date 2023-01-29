@@ -17,13 +17,25 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
+    ],
+  },
+  {
+    path: '/join',
+    element: <App />,
+    children: [
       {
         path: '/join/:code',
         element: <Join />,
         loader: lobbyLoader,
       },
+    ],
+  },
+  {
+    path: '/play',
+    element: <App />,
+    children: [
       {
-        path: '/play',
+        index: true,
         element: <Play />,
       },
     ],

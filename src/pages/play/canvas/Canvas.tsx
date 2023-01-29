@@ -1,8 +1,8 @@
 import { Box } from '@mui/system';
 import { useEffect, useRef, useState } from 'react';
 
-import { CanvasDrawer } from './helpers/CanvasDrawer';
-import socket from './helpers/socket';
+import { CanvasDrawer } from '../../../helpers/CanvasDrawer';
+import socket from '../../../helpers/socket';
 
 export default function Canvas(props: { penSize: number; penColor: string }) {
   const canvas = useRef<HTMLCanvasElement>(null);
