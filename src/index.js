@@ -26,6 +26,6 @@ app.get('/*', function (req, res) {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', 10000, () => {
   console.log(`listening on port ${PORT}`);
 });
