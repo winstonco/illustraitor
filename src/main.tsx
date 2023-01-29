@@ -10,7 +10,7 @@ import Play from './pages/play';
 
 const router = createBrowserRouter([
   {
-    path: '',
+    path: '/*',
     element: <App />,
     children: [
       {
@@ -20,18 +20,18 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/join',
+    path: 'join',
     element: <App />,
     children: [
       {
-        path: '/join/:code',
+        path: ':code',
         element: <Join />,
         loader: lobbyLoader,
       },
     ],
   },
   {
-    path: '/play',
+    path: 'play',
     element: <App />,
     children: [
       {
@@ -39,6 +39,10 @@ const router = createBrowserRouter([
         element: <Play />,
       },
     ],
+  },
+  {
+    path: 'test',
+    element: <App />,
   },
 ]);
 
