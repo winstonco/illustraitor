@@ -12,12 +12,14 @@ export default function Play() {
   const [lobbyName, setLobbyName] = useLobbyName();
   const [currentPlayerName, setCurrentPlayerName] = useState<string>('');
   const [isNamed, setIsNamed] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   console.log(lobbyName);
 
   useEffect(() => {
     socket.on('startGame', () => {
       console.log('Game starting now!');
+      setIsPlaying(true);
 
       socket.on('role', (role) => {
         setRole(role === 'real' ? 'Real' : 'Imposter');
@@ -41,18 +43,28 @@ export default function Play() {
         console.log('Your turn ended!');
       });
 
-      socket.on('guessImposter', (callback) => {
+      socket.on('guessImposter', async (guessTime, callback) => {
+        let responded = false;
+        setTimeout(() => {
+          if (!responded) callback(null, { guess: 'none' });
+        }, guessTime * 1000);
         const myGuess = window.prompt('who?') ?? 'no one lmao';
-        callback(null, { prop: myGuess });
+        callback(null, { guess: myGuess });
+        responded = true;
       });
     });
 
     socket.on('readyCheck', (callback) => {
-      if (isNamed) callback(null, 'ok');
-      else callback(new Error(), 'ok');
+      if (isNamed) callback(null, { response: 'ok' });
+      else callback(new Error(), { response: 'ok' });
+    });
+
+    socket.on('endGame', () => {
+      setIsPlaying(false);
     });
 
     return () => {
+      console.log('removing listeners 1');
       socket.removeAllListeners('startGame');
       socket.removeAllListeners('role');
       socket.removeAllListeners('prompt');
@@ -61,6 +73,7 @@ export default function Play() {
       socket.removeAllListeners('endTurn');
       socket.removeAllListeners('guessImposter');
       socket.removeAllListeners('readyCheck');
+      socket.removeAllListeners('endGame');
     };
   }, []);
 
@@ -84,6 +97,7 @@ export default function Play() {
         lobbyName={lobbyName}
         setLobbyName={setLobbyName}
         currentPlayerName={currentPlayerName}
+        isPlaying={isPlaying}
       />
       <Game />
     </>

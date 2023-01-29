@@ -25,11 +25,9 @@ export default function Game(): JSX.Element {
   }, []);
 
   return (
-    <div className="game">
-      <Stack spacing={1} maxWidth={606}>
-        <Canvas penSize={penSize} penColor={penColor}></Canvas>
-        <Toolbar setPenSize={setPenSize} setPenColor={setPenColor}></Toolbar>
-      </Stack>
-    </div>
+    <Stack spacing={1} maxWidth={606}>
+      <Canvas penSize={penSize} penColor={penColor}></Canvas>
+      <Toolbar setPenSize={setPenSize} setPenColor={setPenColor}></Toolbar>
+    </Stack>
   );
 }

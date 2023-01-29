@@ -1,3 +1,4 @@
+import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 
 import socket from '../../helpers/socket';
@@ -6,16 +7,24 @@ export default function Timer(): JSX.Element {
   const [time, setTime] = useState<number>(0);
   const [targetTime, setTargetTime] = useState<number>(Date.now());
 
+  const startTimer = (duration: number) => {
+    setTargetTime(Date.now() + duration * 1000);
+    setTime(duration);
+  };
+
   useEffect(() => {
     socket.on('startTurn', (turnTime) => {
-      setTargetTime(Date.now() + turnTime * 1000);
-      setTime(turnTime);
+      startTimer(turnTime);
+    });
+
+    socket.on('guessImposter', (guessTime, callback) => {
+      startTimer(guessTime);
     });
 
     return () => {
       socket.removeAllListeners('startTurn');
     };
-  }, []);
+  }, [startTimer]);
 
   useEffect(() => {
     if (targetTime - Date.now() > 0) {
@@ -26,5 +35,9 @@ export default function Timer(): JSX.Element {
     }
   }, [time]);
 
-  return <p style={{ fontSize: '30px' }}>{time}</p>;
+  return (
+    <Typography my={0} sx={{ fontSize: '1.3rem' }} variant="button">
+      Time Left: {time}
+    </Typography>
+  );
 }

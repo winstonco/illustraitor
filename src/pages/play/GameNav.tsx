@@ -1,6 +1,9 @@
 import { Button, ButtonGroup } from '@mui/material';
 import { Stack } from '@mui/system';
+import Typography from '@mui/material/Typography';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { nanoid } from 'nanoid';
+import { useNavigate } from 'react-router-dom';
 
 import socket from '../../helpers/socket';
 import Timer from './Timer';
@@ -11,13 +14,17 @@ export default function GameNav({
   role,
   prompt,
   currentPlayerName,
+  isPlaying,
 }: {
   lobbyName: string;
   setLobbyName: React.Dispatch<React.SetStateAction<string>>;
   role: string;
   prompt: string;
   currentPlayerName: string;
+  isPlaying: boolean;
 }): JSX.Element {
+  const navigate = useNavigate();
+
   const handleGetLink = () => {
     let inviteLink = `${window.location.protocol}//${window.location.hostname}`;
     if (window.location.hostname === 'localhost')
@@ -29,15 +36,25 @@ export default function GameNav({
 
   return (
     <div className="game-nav">
-      <h2>In Lobby: {lobbyName}</h2>
-      <h2>Role: {role}</h2>
-      <h2>Prompt: {prompt}</h2>
-      <h2>Current Player: {currentPlayerName}</h2>
-      <h3>
-        <Button onClick={handleGetLink}>
-          <ContentCopyIcon /> Copy Invite Link
-        </Button>
-      </h3>
+      <Typography variant="body1">
+        <Stack alignItems="flex-start">
+          <h2 style={{ marginTop: 0, marginBottom: 0 }}>
+            In Lobby: {lobbyName}
+          </h2>
+          <Button onClick={handleGetLink}>
+            <ContentCopyIcon /> Copy Invite Link
+          </Button>
+          <h2 style={{ marginTop: 0, marginBottom: 0 }}>
+            {isPlaying ? 'Your Role: ' + role : ''}
+          </h2>
+          <h2 style={{ marginTop: 0, marginBottom: 0 }}>
+            {isPlaying ? 'Prompt: ' + prompt : ''}
+          </h2>
+          <h2 style={{ marginTop: 0, marginBottom: 0 }}>
+            {isPlaying ? 'Current Drawer: ' + currentPlayerName : ''}
+          </h2>
+        </Stack>
+      </Typography>
       <Stack
         direction="row"
         spacing={2}
@@ -52,7 +69,7 @@ export default function GameNav({
         >
           <Button
             onClick={() => {
-              const name = window.prompt('Lobby Name');
+              const name = nanoid(12);
               if (name) {
                 socket.emit('createLobby', name, (res) => {
                   if (res === 'ok') {
@@ -65,25 +82,7 @@ export default function GameNav({
               }
             }}
           >
-            Create Lobby
-          </Button>
-          <Button
-            onClick={() => {
-              const name = window.prompt('Lobby Name');
-              if (name) {
-                socket.emit('joinLobby', name, (res) => {
-                  if (res === 'ok') {
-                    console.log('Successfully joined lobby!');
-                    setLobbyName(name);
-                    return;
-                  } else {
-                    console.log('Failed to join lobby!');
-                  }
-                });
-              }
-            }}
-          >
-            Join Lobby
+            Create New Lobby
           </Button>
           <Button
             onClick={() => {
@@ -92,6 +91,7 @@ export default function GameNav({
                   if (res === 'ok') {
                     console.log('Successfully left lobby!');
                     setLobbyName('');
+                    navigate('/');
                     return;
                   } else {
                     console.log('Failed to leave lobby!');
