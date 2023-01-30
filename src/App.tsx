@@ -2,7 +2,7 @@ import { Stack, Container } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 
-import socket from './helpers/socket';
+import socket from './helpers/getSocket';
 
 export default function App() {
   const [role, setRole] = useState<string>('Real');

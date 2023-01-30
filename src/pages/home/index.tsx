@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
 import { useLobbyName } from '../../App';
-import socket from '../../helpers/socket';
+import socket from '../../helpers/getSocket';
 import Changelog from './Changelog';
 import { Stack } from '@mui/system';
 

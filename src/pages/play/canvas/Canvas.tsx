@@ -2,13 +2,12 @@ import { Box } from '@mui/system';
 import { useEffect, useRef, useState } from 'react';
 import CanvasDrawer from '../../../helpers/CanvasDrawer';
 
-import socket from '../../../helpers/socket';
+import socket from '../../../helpers/getSocket';
 import { useCanvas } from './useCanvas';
 
 export default function Canvas(props: { penSize: number; penColor: string }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   CanvasDrawer.setup(canvas);
-  const cd = useCanvas(socket.id);
   let drawing: boolean = false;
 
   const [canvasWidth, setCanvasWidth] = useState<number>(0);
@@ -22,9 +21,9 @@ export default function Canvas(props: { penSize: number; penColor: string }) {
   ): void => {
     drawing = true;
     const { offsetX, offsetY } = event.nativeEvent;
-    cd?.beginDrawing(offsetX, offsetY);
+    useCanvas(socket.id)?.beginDrawing(offsetX, offsetY);
     console.log('Mouse down');
-    socket.emit('beginDrawing', offsetX, offsetY);
+    socket.emit('beginDrawing', socket.id, offsetX, offsetY);
   };
 
   const handleMouseMove = (
@@ -32,15 +31,27 @@ export default function Canvas(props: { penSize: number; penColor: string }) {
   ): void => {
     if (drawing) {
       const { offsetX, offsetY } = event.nativeEvent;
-      cd?.drawTo(offsetX, offsetY, props.penSize, props.penColor);
-      socket.emit('drawTo', offsetX, offsetY, props.penSize, props.penColor);
+      useCanvas(socket.id)?.drawTo(
+        offsetX,
+        offsetY,
+        props.penSize,
+        props.penColor
+      );
+      socket.emit(
+        'drawTo',
+        socket.id,
+        offsetX,
+        offsetY,
+        props.penSize,
+        props.penColor
+      );
     }
   };
 
   const handleMouseUp = (): void => {
     drawing = false;
-    cd?.endDrawing();
-    socket.emit('endDrawing');
+    useCanvas(socket.id)?.endDrawing();
+    socket.emit('endDrawing', socket.id);
   };
 
   return (

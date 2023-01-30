@@ -3,21 +3,25 @@ import { Stack } from '@mui/system';
 
 import Canvas from './canvas/Canvas';
 import Toolbar from './canvas/Toolbar';
-import socket from '../../helpers/socket';
+import socket from '../../helpers/getSocket';
 import { useCanvas } from './canvas/useCanvas';
+import CanvasDrawer from '../../helpers/CanvasDrawer';
 
 export default function Game(): JSX.Element {
   const [penSize, setPenSize] = useState(5);
   const [penColor, setPenColor] = useState('black');
-  const cd = useCanvas(socket.id);
 
   useEffect(() => {
-    if (cd) {
-      socket.on('beginDrawing', cd.beginDrawing);
-      socket.on('drawTo', cd.drawTo);
-      socket.on('endDrawing', cd.endDrawing);
-      socket.on('clearCanvas', cd.clearCanvas);
-    }
+    socket.on('beginDrawing', (id, ...args) => {
+      useCanvas(id)?.beginDrawing(...args);
+    });
+    socket.on('drawTo', (id, ...args) => {
+      useCanvas(id)?.drawTo(...args);
+    });
+    socket.on('endDrawing', (id, ...args) => {
+      useCanvas(id)?.endDrawing(...args);
+    });
+    socket.on('clearCanvas', CanvasDrawer.clearCanvas);
 
     return () => {
       socket.removeAllListeners('beginDrawing');

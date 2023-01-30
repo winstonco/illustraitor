@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { Stack } from '@mui/system';
 
-import socket from '../../../helpers/socket';
+import socket from '../../../helpers/getSocket';
 import PenSize from './PenSize';
 import PenColor from './PenColor';
 import { useCanvas } from './useCanvas';

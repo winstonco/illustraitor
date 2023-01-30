@@ -5,7 +5,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { nanoid } from 'nanoid';
 import { useNavigate } from 'react-router-dom';
 
-import socket from '../../helpers/socket';
+import socket from '../../helpers/getSocket';
 import Timer from './Timer';
 
 export default function GameNav({

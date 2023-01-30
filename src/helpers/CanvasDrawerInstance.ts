@@ -30,7 +30,7 @@ export default class CanvasDrawerInstance {
     CanvasDrawer.dot(this.lastPos[0], this.lastPos[1]);
   };
 
-  clearCanvas = (): void => CanvasDrawer.clearCanvas();
+  static clearCanvas = (): void => CanvasDrawer.clearCanvas();
 
   private drawLine(toX: number, toY: number, width?: number, color?: string) {
     if (this.lastLastPos !== undefined) {

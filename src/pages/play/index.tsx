@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import Game from './Game';
 import GameNav from './GameNav';
-import socket from '../../helpers/socket';
+import socket from '../../helpers/getSocket';
 import { useLobbyName, usePrompt, useRole } from '../../App';
 import Login from './Login';
 

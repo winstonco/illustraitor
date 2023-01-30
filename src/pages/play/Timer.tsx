@@ -1,7 +1,7 @@
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 
-import socket from '../../helpers/socket';
+import socket from '../../helpers/getSocket';
 
 export default function Timer(): JSX.Element {
   const [time, setTime] = useState<number>(0);

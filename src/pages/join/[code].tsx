@@ -3,7 +3,7 @@ import { useLoaderData, Link, useNavigate } from 'react-router-dom';
 
 import { useLobbyName } from '../../App';
 
-import socket from '../../helpers/socket';
+import socket from '../../helpers/getSocket';
 
 export async function loader({ params }: any) {
   console.log(params);
