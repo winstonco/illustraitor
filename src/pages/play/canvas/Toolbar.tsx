@@ -4,7 +4,7 @@ import { Stack } from '@mui/system';
 import socket from '../../../helpers/getSocket';
 import PenSize from './PenSize';
 import PenColor from './PenColor';
-import { useCanvas } from './useCanvas';
+import { useCanvas } from '../../../hooks/useCanvas';
 import CanvasDrawer from '../../../helpers/CanvasDrawer';
 
 export default function Toolbar(props: {

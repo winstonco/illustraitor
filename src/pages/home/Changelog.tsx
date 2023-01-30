@@ -1,5 +1,7 @@
 import Typography from '@mui/material/Typography';
+import { Stack } from '@mui/system';
 import { useState, useEffect } from 'react';
+import useFetchAndRevalidate from '../../hooks/useFetchAndRevalidate';
 
 type UpdateType = {
   type: 'Added' | 'Changed' | 'Deprecated' | 'Removed' | 'Fixed' | 'Security';
@@ -24,70 +26,55 @@ type ChangelogType = {
 export default function Changelog() {
   const [about, setAbout] = useState<string>('Loading:');
   const [log, setLog] = useState<JSX.Element[]>([<p key={0}>Loading</p>]);
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const changePropToJSX = (prop: UpdateType): JSX.Element => {
       return prop ? (
-        <div style={{ marginLeft: '1rem' }}>
-          <br />
-          {prop.list.reduce(
-            (p, c) => (
-              <>
-                {p}
-                <br />
-                {`- ${c}`}
-              </>
-            ),
-            <>{`${prop.type}:`}</>
-          )}
-        </div>
+        <>
+          <div
+            style={{ margin: '0', marginLeft: '0.5rem' }}
+          >{`${prop.type}:`}</div>
+          {prop.list.map((listItem) => (
+            <Stack direction={'row'} ml="1rem">
+              <span style={{ marginRight: '0.5rem' }}>-</span>
+              <span>{listItem}</span>
+            </Stack>
+          ))}
+        </>
       ) : (
         <></>
       );
     };
 
-    const fetchChangelog = () => {
-      return new Promise<ChangelogType>(async (res, rej) => {
-        try {
-          console.log('Fetching changelog');
-          const changelog = await (
-            await fetch(import.meta.env.VITE_CHANGELOG_URL)
-          ).json();
-          setLoading(false);
-          res(changelog);
-        } catch (error) {
-          setTimeout(async () => {
-            fetchChangelog();
-          }, 5000);
-        }
-      });
-    };
-
     const parseChangelog = async () => {
-      const changelog = await fetchChangelog();
-      setAbout(changelog!.meta.about);
+      useFetchAndRevalidate<ChangelogType>(
+        [import.meta.env.VITE_CHANGELOG_URL],
+        (changelog) => {
+          setAbout(changelog!.meta.about);
 
-      let vToString: JSX.Element[] = [];
-      let keys = 0;
-      changelog!.versions.forEach((v) => {
-        vToString.push(<div key={keys++}>Version: {v.version}</div>);
-        v.note ? vToString.push(<i key={keys++}>{v.note}</i>) : '';
-        v.updates.forEach((update) =>
-          vToString.push(<div key={keys++}>{changePropToJSX(update)}</div>)
-        );
-        vToString.push(
-          <div key={keys++}>
-            <br />
-            <br />
-          </div>
-        );
-      });
-
-      setLog(vToString);
+          let vToString: JSX.Element[] = [];
+          let keys = 0;
+          changelog!.versions.forEach((v) => {
+            vToString.push(
+              <Typography variant="h6" my={0} key={keys++}>
+                v {v.version}
+              </Typography>
+            );
+            v.note ? vToString.push(<i key={keys++}>{v.note}</i>) : '';
+            v.updates.forEach((update) =>
+              vToString.push(<div key={keys++}>{changePropToJSX(update)}</div>)
+            );
+            vToString.push(<br key={keys++} />);
+          });
+          setLog(vToString);
+        },
+        () => {
+          console.log('Revalidating changelog...');
+        }
+      );
     };
     parseChangelog();
-  }, [loading]);
+  }, []);
 
   return (
     <>

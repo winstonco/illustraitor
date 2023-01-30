@@ -53,7 +53,7 @@ export default class CanvasDrawer {
   };
 
   static clearCanvas = (): void => {
-    console.log('Cleared!');
+    // console.log('Cleared!');
     this.canvas.current
       ?.getContext('2d')
       ?.clearRect(0, 0, this.canvas.current.width, this.canvas.current.height);

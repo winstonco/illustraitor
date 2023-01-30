@@ -14,33 +14,28 @@ export default function Play() {
   const [isNamed, setIsNamed] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
-  console.log(lobbyName);
+  // console.log(lobbyName);
 
   useEffect(() => {
     socket.on('startGame', () => {
-      console.log('Game starting now!');
+      // console.log('Game starting now!');
       setIsPlaying(true);
 
       socket.on('role', (role) => {
         setRole(role === 'real' ? 'Real' : 'Imposter');
-        console.log(role);
+        // console.log(role);
       });
 
-      socket.on('prompt', (prompt) => {
-        setPrompt(prompt);
-        console.log(prompt);
-      });
+      socket.on('prompt', setPrompt);
 
-      socket.on('startTurnAll', (name) => {
-        setCurrentPlayerName(name);
-      });
+      socket.on('startTurnAll', setCurrentPlayerName);
 
       socket.on('startTurn', () => {
-        console.log("It's your turn!");
+        // console.log("It's your turn!");
       });
 
       socket.on('endTurn', () => {
-        console.log('Your turn ended!');
+        // console.log('Your turn ended!');
       });
 
       socket.on('guessImposter', async (guessTime, callback) => {
@@ -64,7 +59,6 @@ export default function Play() {
     });
 
     return () => {
-      console.log('removing listeners 1');
       socket.removeAllListeners('startGame');
       socket.removeAllListeners('role');
       socket.removeAllListeners('prompt');
@@ -81,10 +75,10 @@ export default function Play() {
     // check name?
     socket.emit('namePlayer', lobbyName, name, (res) => {
       if (res === 'ok') {
-        console.log('Player is named');
+        // console.log('Player was named');
         setIsNamed(true);
       } else {
-        console.log('Failed to name player');
+        // console.log('Failed to name player');
       }
     });
   };

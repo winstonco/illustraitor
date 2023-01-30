@@ -1,4 +1,4 @@
-import CanvasDrawerInstance from '../../../helpers/CanvasDrawerInstance';
+import CanvasDrawerInstance from '../helpers/CanvasDrawerInstance';
 
 const drawers = new Map<string, CanvasDrawerInstance>();
 

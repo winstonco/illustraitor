@@ -23,8 +23,16 @@ meta: { about: 'A party game where everyone is an artist,
 versions:
   [
     {
+      version: 0.1.3,
+      updates:
+        [
+          { type: Added, list: [Changelog revalidation for fun] },
+          { type: Changed, list: [Changelog formatting] },
+          { type: Removed, list: [Unnecessary console logs] },
+        ],
+    },
+    {
       version: 0.1.0,
-      note: Fixed bug preventing simultaneous drawing.,
       updates:
         [
           {

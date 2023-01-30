@@ -4,7 +4,7 @@ import { Stack } from '@mui/system';
 import Canvas from './canvas/Canvas';
 import Toolbar from './canvas/Toolbar';
 import socket from '../../helpers/getSocket';
-import { useCanvas } from './canvas/useCanvas';
+import { useCanvas } from '../../hooks/useCanvas';
 import CanvasDrawer from '../../helpers/CanvasDrawer';
 
 export default function Game(): JSX.Element {

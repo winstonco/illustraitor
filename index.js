@@ -10,9 +10,7 @@ const dotenvPath = path.resolve(
   process.env.NODE_ENV === 'production' ? '.env' : '.env.development.local'
 );
 
-console.log(process.env.NODE_ENV);
-
-console.log(dotenvPath);
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 
 dotenv.config({
   path: dotenvPath,

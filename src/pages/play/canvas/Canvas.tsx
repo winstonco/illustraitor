@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import CanvasDrawer from '../../../helpers/CanvasDrawer';
 
 import socket from '../../../helpers/getSocket';
-import { useCanvas } from './useCanvas';
+import { useCanvas } from '../../../hooks/useCanvas';
 
 export default function Canvas(props: { penSize: number; penColor: string }) {
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -22,7 +22,6 @@ export default function Canvas(props: { penSize: number; penColor: string }) {
     drawing = true;
     const { offsetX, offsetY } = event.nativeEvent;
     useCanvas(socket.id)?.beginDrawing(offsetX, offsetY);
-    console.log('Mouse down');
     socket.emit('beginDrawing', socket.id, offsetX, offsetY);
   };
 

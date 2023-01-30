@@ -2,11 +2,11 @@ import { Button } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useNavigate } from 'react-router-dom';
 import { nanoid } from 'nanoid';
+import { Stack } from '@mui/system';
 
 import { useLobbyName } from '../../App';
 import socket from '../../helpers/getSocket';
 import Changelog from './Changelog';
-import { Stack } from '@mui/system';
 
 export default function Home() {
   const [lobbyName, setLobbyName] = useLobbyName();
@@ -25,10 +25,10 @@ export default function Home() {
               socket.emit('createLobby', name, (res) => {
                 if (res === 'ok') {
                   setLobbyName(name);
-                  console.log('Successfully created lobby!');
+                  // console.log('Successfully created lobby!');
                   navigate('/play');
                 } else {
-                  console.log('Failed to create lobby!');
+                  // console.log('Failed to create lobby!');
                 }
               });
             }
