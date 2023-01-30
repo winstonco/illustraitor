@@ -1,12 +1,17 @@
-# version: string;
-# note?: string;
-# updates: {}
-#   added?: string[];
-#   changed?: string[];
-#   deprecated?: string[];
-#   removed?: string[];
-#   fixed?: string[];
-#   security?: string[];
+# meta: {
+#   about: string
+#   tags?: string[]
+# }
+# versions: [
+#   {
+#     version: string
+#     note?: string
+#     updates: {
+#       type: 'Added' | 'Changed' | 'Deprecated' | 'Removed' | 'Fixed' | 'Security'
+#       list: string[]
+#     }
+#   }
+# ]
 
 ---
 meta: { about: 'A party game where everyone is an artist,
@@ -18,8 +23,39 @@ meta: { about: 'A party game where everyone is an artist,
 versions:
   [
     {
+      version: 0.1.0,
+      note: Fixed bug preventing simultaneous drawing.,
+      updates:
+        [
+          {
+            type: Added,
+            list: [Little dots at the beginning and end of paths],
+          },
+          { type: Changed, list: [Line quality slightly decreased] },
+          {
+            type: Fixed,
+            list:
+              [
+                Bug where lines were drawn connecting different players' paths when being drawn simultaneously,
+              ],
+          },
+        ],
+    },
+    {
       version: 0.0.0,
-      note: Versions starting now.,
-      updates: [{ type: Added, list: [Changelog, Settings (todo)] }],
+      note: Versions starting now. Game is kinda playable.,
+      updates:
+        [
+          {
+            type: Added,
+            list:
+              [
+                Random lobby codes,
+                Changelog,
+                Lobby Settings (todo),
+                Everything else,
+              ],
+          },
+        ],
     },
   ]
