@@ -35,7 +35,7 @@ export default function Changelog() {
             style={{ margin: '0', marginLeft: '0.5rem' }}
           >{`${prop.type}:`}</div>
           {prop.list.map((listItem) => (
-            <Stack direction={'row'} ml="1rem">
+            <Stack direction={'row'} ml="1rem" key={listItem.toString()}>
               <span style={{ marginRight: '0.5rem' }}>-</span>
               <span>{listItem}</span>
             </Stack>
