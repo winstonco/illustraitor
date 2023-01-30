@@ -18,8 +18,7 @@ typings/
 
 # dotenv environment variables file
 .env
-.env.development
-.env.test
+**.local
 
 # Editor directories and files
 .vscode/*

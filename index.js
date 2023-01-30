@@ -7,8 +7,12 @@ import * as fs from 'fs';
 
 const dotenvPath = path.resolve(
   process.cwd(),
-  process.env.NODE_ENV ? '.env' : '.env.development'
+  process.env.NODE_ENV === 'production' ? '.env' : '.env.development.local'
 );
+
+console.log(process.env.NODE_ENV);
+
+console.log(dotenvPath);
 
 dotenv.config({
   path: dotenvPath,
