@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Outlet, useOutletContext } from 'react-router-dom';
 
 import socket from './helpers/getSocket';
+import { useCanvas } from './pages/play/canvas/useCanvas';
 
 export default function App() {
   const [role, setRole] = useState<string>('Real');
@@ -16,6 +17,7 @@ export default function App() {
 
     socket.on('disconnect', () => {
       console.log('Disconnected');
+      useCanvas(socket.id, true);
       console.log(socket.id); // undefined
     });
 
