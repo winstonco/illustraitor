@@ -5,6 +5,7 @@ import socket from '../../../helpers/getSocket';
 import PenSize from './PenSize';
 import PenColor from './PenColor';
 import { useCanvas } from './useCanvas';
+import CanvasDrawer from '../../../helpers/CanvasDrawer';
 
 export default function Toolbar(props: {
   setPenSize: React.Dispatch<React.SetStateAction<number>>;
@@ -22,7 +23,7 @@ export default function Toolbar(props: {
       <Button
         variant="outlined"
         onClick={() => {
-          cd?.clearCanvas();
+          CanvasDrawer.clearCanvas();
           socket.emit('clearCanvas');
         }}
       >
