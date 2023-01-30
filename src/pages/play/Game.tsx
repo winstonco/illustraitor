@@ -1,20 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Stack } from '@mui/system';
 
 import Canvas from './canvas/Canvas';
 import Toolbar from './canvas/Toolbar';
 import socket from '../../helpers/socket';
-import { CanvasDrawer } from '../../helpers/CanvasDrawer';
+import { useCanvas } from './canvas/useCanvas';
 
 export default function Game(): JSX.Element {
   const [penSize, setPenSize] = useState(5);
   const [penColor, setPenColor] = useState('black');
+  const cd = useCanvas(socket.id);
 
   useEffect(() => {
-    socket.on('beginDrawing', CanvasDrawer.beginDrawing);
-    socket.on('drawTo', CanvasDrawer.drawTo);
-    socket.on('endDrawing', CanvasDrawer.endDrawing);
-    socket.on('clearCanvas', CanvasDrawer.clearCanvas);
+    if (cd) {
+      socket.on('beginDrawing', cd.beginDrawing);
+      socket.on('drawTo', cd.drawTo);
+      socket.on('endDrawing', cd.endDrawing);
+      socket.on('clearCanvas', cd.clearCanvas);
+    }
 
     return () => {
       socket.removeAllListeners('beginDrawing');

@@ -36,25 +36,21 @@ export default function GameNav({
 
   return (
     <div className="game-nav">
-      <Typography variant="body1">
-        <Stack alignItems="flex-start">
-          <h2 style={{ marginTop: 0, marginBottom: 0 }}>
-            In Lobby: {lobbyName}
-          </h2>
-          <Button onClick={handleGetLink}>
-            <ContentCopyIcon /> Copy Invite Link
-          </Button>
-          <h2 style={{ marginTop: 0, marginBottom: 0 }}>
-            {isPlaying ? 'Your Role: ' + role : ''}
-          </h2>
-          <h2 style={{ marginTop: 0, marginBottom: 0 }}>
-            {isPlaying ? 'Prompt: ' + prompt : ''}
-          </h2>
-          <h2 style={{ marginTop: 0, marginBottom: 0 }}>
-            {isPlaying ? 'Current Drawer: ' + currentPlayerName : ''}
-          </h2>
-        </Stack>
-      </Typography>
+      <Stack alignItems="flex-start">
+        <h2 style={{ marginTop: 0, marginBottom: 0 }}>In Lobby: {lobbyName}</h2>
+        <Button onClick={handleGetLink}>
+          <ContentCopyIcon /> Copy Invite Link
+        </Button>
+        <h2 style={{ marginTop: 0, marginBottom: 0 }}>
+          {isPlaying ? 'Your Role: ' + role : ''}
+        </h2>
+        <h2 style={{ marginTop: 0, marginBottom: 0 }}>
+          {isPlaying ? 'Prompt: ' + prompt : ''}
+        </h2>
+        <h2 style={{ marginTop: 0, marginBottom: 0 }}>
+          {isPlaying ? 'Current Drawer: ' + currentPlayerName : ''}
+        </h2>
+      </Stack>
       <Stack
         direction="row"
         spacing={2}
