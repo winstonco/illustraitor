@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
-import { useLoaderData, Link, useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 
-import { useLobbyName } from '../../App';
-
+import { useLobbyName, usePlayerName } from '../../App';
 import socket from '../../helpers/getSocket';
+import Login from './Login';
 
 export async function loader({ params }: any) {
-  console.log(params);
   let code = '-1';
   return new Promise<string>((resolve) => {
     if (params.code) {
@@ -25,19 +24,37 @@ export async function loader({ params }: any) {
 
 export default function Join() {
   const [lobbyName, setLobbyName] = useLobbyName();
+  const [playerName, setPlayerName] = usePlayerName();
   const navigate = useNavigate();
   const code = useLoaderData();
 
-  // redirect on render
+  const handleNameSubmit = (name: string) => {
+    // check name?
+    socket.emit('namePlayer', lobbyName, name, (res) => {
+      if (res === 'ok') {
+        // console.log('Player was named');
+        if (typeof code === 'string' && code !== '-1') {
+          console.log(name);
+          setPlayerName(name);
+          setLobbyName(code);
+          navigate('/play');
+        }
+      } else {
+        // console.log('Failed to name player');
+      }
+    });
+  };
+
+  // redirect on mount if no code / bad code
   useEffect(() => {
-    if (typeof code === 'string' && code !== '-1') {
+    const codeIsGood = typeof code === 'string' && code !== '-1';
+    if (codeIsGood) {
       setLobbyName(code);
-      navigate('/play');
     } else {
-      window.alert('Failed to join lobby!');
+      // window.alert('Failed to join lobby!');
       navigate('/');
     }
   }, []);
 
-  return <h2>Joining Lobby</h2>;
+  return <Login onNameSubmit={handleNameSubmit} />;
 }

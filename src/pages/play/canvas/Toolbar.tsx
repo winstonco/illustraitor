@@ -4,15 +4,12 @@ import { Stack } from '@mui/system';
 import socket from '../../../helpers/getSocket';
 import PenSize from './PenSize';
 import PenColor from './PenColor';
-import { useCanvas } from '../../../hooks/useCanvas';
 import CanvasDrawer from '../../../helpers/CanvasDrawer';
 
 export default function Toolbar(props: {
   setPenSize: React.Dispatch<React.SetStateAction<number>>;
   setPenColor: React.Dispatch<React.SetStateAction<string>>;
 }): JSX.Element {
-  const cd = useCanvas(socket.id);
-
   return (
     <Stack
       direction="row"

@@ -2,8 +2,19 @@ import CanvasDrawerInstance from '../helpers/CanvasDrawerInstance';
 
 const drawers = new Map<string, CanvasDrawerInstance>();
 
-export const useCanvas = (id: string, del?: boolean) => {
-  if (!drawers.has(id)) drawers.set(id, new CanvasDrawerInstance(id));
-  if (del) drawers.delete(id);
-  return drawers.get(id);
+type CanvasDrawerInstanceDeleter = () => void;
+
+export const useCanvas = (
+  id: string
+): [CanvasDrawerInstance, CanvasDrawerInstanceDeleter] => {
+  let instance = drawers.get(id);
+  if (!instance) {
+    const newInstance = new CanvasDrawerInstance(id);
+    drawers.set(id, newInstance);
+    instance = newInstance;
+  }
+  const deleter = () => {
+    drawers.delete(id);
+  };
+  return [instance, deleter];
 };

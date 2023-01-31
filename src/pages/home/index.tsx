@@ -13,36 +13,31 @@ export default function Home() {
 
   const navigate = useNavigate();
 
+  const handleCreateLobby = () => {
+    // const name = window.prompt('Lobby Name');
+    const name = nanoid(12);
+    if (name) {
+      socket.emit('createLobby', name, (res) => {
+        if (res === 'ok') {
+          setLobbyName(name);
+          // console.log('Successfully created lobby!');
+          navigate(`/join/${name}`);
+        } else {
+          // console.log('Failed to create lobby!');
+        }
+      });
+    }
+  };
+
+  const handleClickSettings = () => {};
+
   return (
     <Stack>
       <Stack direction="row">
-        <Button
-          variant="contained"
-          onClick={() => {
-            // const name = window.prompt('Lobby Name');
-            const name = nanoid(12);
-            if (name) {
-              socket.emit('createLobby', name, (res) => {
-                if (res === 'ok') {
-                  setLobbyName(name);
-                  // console.log('Successfully created lobby!');
-                  navigate('/play');
-                } else {
-                  // console.log('Failed to create lobby!');
-                }
-              });
-            }
-          }}
-        >
+        <Button variant="contained" onClick={handleCreateLobby}>
           Create Lobby
         </Button>
-        <Button
-          variant="contained"
-          disabled
-          onClick={() => {
-            // Nothing yet
-          }}
-        >
+        <Button variant="contained" disabled onClick={handleClickSettings}>
           <SettingsIcon />
           Settings
         </Button>

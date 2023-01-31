@@ -21,7 +21,7 @@ export default function Canvas(props: { penSize: number; penColor: string }) {
   ): void => {
     drawing = true;
     const { offsetX, offsetY } = event.nativeEvent;
-    useCanvas(socket.id)?.beginDrawing(offsetX, offsetY);
+    useCanvas(socket.id)[0].beginDrawing(offsetX, offsetY);
     socket.emit('beginDrawing', socket.id, offsetX, offsetY);
   };
 
@@ -30,7 +30,7 @@ export default function Canvas(props: { penSize: number; penColor: string }) {
   ): void => {
     if (drawing) {
       const { offsetX, offsetY } = event.nativeEvent;
-      useCanvas(socket.id)?.drawTo(
+      useCanvas(socket.id)[0].drawTo(
         offsetX,
         offsetY,
         props.penSize,
@@ -49,7 +49,7 @@ export default function Canvas(props: { penSize: number; penColor: string }) {
 
   const handleMouseUp = (): void => {
     drawing = false;
-    useCanvas(socket.id)?.endDrawing();
+    useCanvas(socket.id)[0].endDrawing();
     socket.emit('endDrawing', socket.id);
   };
 

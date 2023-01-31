@@ -13,13 +13,13 @@ export default function Game(): JSX.Element {
 
   useEffect(() => {
     socket.on('beginDrawing', (id, ...args) => {
-      useCanvas(id)?.beginDrawing(...args);
+      useCanvas(id)[0].beginDrawing(...args);
     });
     socket.on('drawTo', (id, ...args) => {
-      useCanvas(id)?.drawTo(...args);
+      useCanvas(id)[0].drawTo(...args);
     });
     socket.on('endDrawing', (id, ...args) => {
-      useCanvas(id)?.endDrawing(...args);
+      useCanvas(id)[0].endDrawing(...args);
     });
     socket.on('clearCanvas', CanvasDrawer.clearCanvas);
 

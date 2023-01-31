@@ -4,15 +4,16 @@ import Game from './Game';
 import GameNav from './GameNav';
 import socket from '../../helpers/getSocket';
 import { useLobbyName, usePrompt, useRole } from '../../App';
-import Login from './Login';
+import { useNavigate } from 'react-router-dom';
 
 export default function Play() {
   const [role, setRole] = useRole();
   const [prompt, setPrompt] = usePrompt();
   const [lobbyName, setLobbyName] = useLobbyName();
   const [currentPlayerName, setCurrentPlayerName] = useState<string>('');
-  const [isNamed, setIsNamed] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   // console.log(lobbyName);
 
@@ -50,8 +51,7 @@ export default function Play() {
     });
 
     socket.on('readyCheck', (callback) => {
-      if (isNamed) callback(null, { response: 'ok' });
-      else callback(new Error(), { response: 'ok' });
+      callback(new Error(), { response: 'ok' });
     });
 
     socket.on('endGame', () => {
@@ -71,19 +71,15 @@ export default function Play() {
     };
   }, []);
 
-  const handleNameSubmit = (name: string) => {
-    // check name?
-    socket.emit('namePlayer', lobbyName, name, (res) => {
-      if (res === 'ok') {
-        // console.log('Player was named');
-        setIsNamed(true);
-      } else {
-        // console.log('Failed to name player');
-      }
-    });
-  };
+  // redirect on mount if no code / bad code
+  useEffect(() => {
+    if (!lobbyName) {
+      // window.alert('Invalid lobby');
+      navigate('/');
+    }
+  }, []);
 
-  return isNamed ? (
+  return (
     <>
       <GameNav
         role={role}
@@ -95,7 +91,5 @@ export default function Play() {
       />
       <Game />
     </>
-  ) : (
-    <Login onNameSubmit={handleNameSubmit} />
   );
 }

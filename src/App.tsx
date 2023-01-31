@@ -9,6 +9,7 @@ export default function App() {
   const [role, setRole] = useState<string>('Real');
   const [prompt, setPrompt] = useState<string>('');
   const [lobbyName, setLobbyName] = useState<string>('');
+  const [playerName, setPlayerName] = useState<string>('');
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -17,7 +18,7 @@ export default function App() {
 
     socket.on('disconnect', () => {
       console.log('Disconnected');
-      useCanvas(socket.id, true);
+      useCanvas(socket.id)[1]();
     });
 
     return () => {
@@ -36,6 +37,7 @@ export default function App() {
               roleContext: [role, setRole],
               promptContext: [prompt, setPrompt],
               lobbyNameContext: [lobbyName, setLobbyName],
+              playerNameContext: [playerName, setPlayerName],
             }}
           />
         </div>
@@ -48,6 +50,7 @@ type ContextType = {
   roleContext: [string, React.Dispatch<React.SetStateAction<string>>];
   promptContext: [string, React.Dispatch<React.SetStateAction<string>>];
   lobbyNameContext: [string, React.Dispatch<React.SetStateAction<string>>];
+  playerNameContext: [string, React.Dispatch<React.SetStateAction<string>>];
 };
 
 export const useRole = () => {
@@ -63,4 +66,9 @@ export const usePrompt = () => {
 export const useLobbyName = () => {
   const { lobbyNameContext } = useOutletContext<ContextType>();
   return lobbyNameContext;
+};
+
+export const usePlayerName = () => {
+  const { playerNameContext } = useOutletContext<ContextType>();
+  return playerNameContext;
 };
