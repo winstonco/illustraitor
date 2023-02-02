@@ -7,9 +7,13 @@ import { Stack } from '@mui/system';
 import { useLobbyName } from '../../App';
 import socket from '../../helpers/getSocket';
 import Changelog from './Changelog';
+import { useState } from 'react';
 
 export default function Home() {
   const [lobbyName, setLobbyName] = useLobbyName();
+  const [hoverCreateLobby, setHoverCreateLobby] = useState<boolean>(false);
+  const [hoverJoinLobby, setHoverJoinLobby] = useState<boolean>(false);
+  const [hoverSettings, setHoverSettings] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -29,15 +33,38 @@ export default function Home() {
     }
   };
 
+  const handleJoinLobby = () => {
+    navigate(`/join/${name}`);
+  };
+
   const handleClickSettings = () => {};
 
   return (
     <Stack>
-      <Stack direction="row">
-        <Button variant="contained" onClick={handleCreateLobby}>
+      <Stack direction="row" gap={'1rem'}>
+        <Button
+          variant={hoverCreateLobby ? 'contained' : 'outlined'}
+          onMouseEnter={() => setHoverCreateLobby(true)}
+          onMouseLeave={() => setHoverCreateLobby(false)}
+          onClick={handleCreateLobby}
+        >
           Create Lobby
         </Button>
-        <Button variant="contained" disabled onClick={handleClickSettings}>
+        <Button
+          variant={hoverJoinLobby ? 'contained' : 'outlined'}
+          onMouseEnter={() => setHoverJoinLobby(true)}
+          onMouseLeave={() => setHoverJoinLobby(false)}
+          onClick={handleJoinLobby}
+        >
+          I Have A Code
+        </Button>
+        <Button
+          variant="contained" //{hoverSettings ? 'contained' : 'outlined'}
+          disabled
+          onMouseEnter={() => setHoverSettings(true)}
+          onMouseLeave={() => setHoverSettings(false)}
+          onClick={handleClickSettings}
+        >
           <SettingsIcon />
           Settings
         </Button>

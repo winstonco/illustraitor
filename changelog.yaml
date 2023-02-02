@@ -23,39 +23,50 @@ meta: { about: 'A party game where everyone is an artist,
 versions:
   [
     {
-      version: 0.2.0,
-      note: Gameplay updates.,
+      version: 0.2.1,
+      note: 'Gameplay and QOL updates.',
       updates:
         [
-          { type: Added, list: [404 Page] },
-          { type: Changed, list: [Minimum of 3 players to start game] },
+          {
+            type: 'Added',
+            list:
+              [
+                '404 Page',
+                'Can join lobby with code, if preferred',
+                'Home page button hover effects',
+              ],
+          },
+          {
+            type: 'Changed',
+            list: ['Minimum of 3 players required to start game'],
+          },
         ],
     },
     {
       version: 0.1.4,
-      note: Quality of life changes.,
+      note: 'Quality of life changes.',
       updates:
         [
           {
-            type: Added,
+            type: 'Added',
             list:
               [
-                Little dots at the beginning and end of paths,
-                Changelog revalidation for fun,
-                Random default names,
-                Names shown in game,
+                'Little dots at the beginning and end of paths',
+                'Changelog revalidation for fun',
+                'Random default names',
+                'Names shown in game',
               ],
           },
           {
-            type: Changed,
-            list: [Line quality slightly decreased, Changelog formatting],
+            type: 'Changed',
+            list: ['Line quality slightly decreased', 'Changelog formatting'],
           },
-          { type: Removed, list: [Unnecessary logging to the console] },
+          { type: 'Removed', list: ['Unnecessary logging to the console'] },
           {
-            type: Fixed,
+            type: 'Fixed',
             list:
               [
-                Bug where lines were drawn connecting different players' paths when being drawn simultaneously,
+                "Bug where lines were drawn connecting different players' paths when being drawn simultaneously",
               ],
           },
         ],

@@ -1,6 +1,7 @@
+import { Tooltip } from '@mui/material';
 import { Stack, Container } from '@mui/system';
 import { useEffect, useState } from 'react';
-import { Outlet, useOutletContext } from 'react-router-dom';
+import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 
 import socket from './helpers/getSocket';
 import { useCanvas } from './hooks/useCanvas';
@@ -10,6 +11,7 @@ export default function App() {
   const [prompt, setPrompt] = useState<string>('');
   const [lobbyName, setLobbyName] = useState<string>('');
   const [playerName, setPlayerName] = useState<string>('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -31,7 +33,7 @@ export default function App() {
     <Container sx={{ display: 'flex', justifyContent: 'center' }}>
       <Stack spacing={1}>
         <div className="App">
-          <h1>
+          <h1 onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
             <span
               style={{ textDecoration: 'line-through', color: 'lightgray' }}
             >

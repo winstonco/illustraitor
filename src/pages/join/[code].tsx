@@ -3,7 +3,7 @@ import { useLoaderData, useNavigate } from 'react-router-dom';
 
 import { useLobbyName, usePlayerName } from '../../App';
 import socket from '../../helpers/getSocket';
-import Login from './Login';
+import EnterName from './EnterName';
 
 export async function loader({ params }: any) {
   let code = '-1';
@@ -56,5 +56,5 @@ export default function Join() {
     }
   }, []);
 
-  return <Login onNameSubmit={handleNameSubmit} />;
+  return <EnterName onNameSubmit={handleNameSubmit} />;
 }

@@ -8,6 +8,7 @@ import Join, { loader as lobbyLoader } from './pages/join/[code]';
 import Home from './pages/home';
 import Play from './pages/play';
 import ErrorPage from './pages/error-page';
+import JoinWithCode from './pages/join';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
     path: 'join',
     element: <App />,
     children: [
+      {
+        index: true,
+        element: <JoinWithCode />,
+      },
       {
         path: ':code',
         element: <Join />,
