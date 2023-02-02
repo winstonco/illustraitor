@@ -23,7 +23,17 @@ meta: { about: 'A party game where everyone is an artist,
 versions:
   [
     {
+      version: 0.2.0,
+      note: Gameplay updates.,
+      updates:
+        [
+          { type: Added, list: [404 Page] },
+          { type: Changed, list: [Minimum of 3 players to start game] },
+        ],
+    },
+    {
       version: 0.1.4,
+      note: Quality of life changes.,
       updates:
         [
           {

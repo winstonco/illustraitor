@@ -7,10 +7,11 @@ import './index.css';
 import Join, { loader as lobbyLoader } from './pages/join/[code]';
 import Home from './pages/home';
 import Play from './pages/play';
+import ErrorPage from './pages/error-page';
 
 const router = createBrowserRouter([
   {
-    path: '/*',
+    path: '/',
     element: <App />,
     children: [
       {
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
     ],
+    errorElement: <ErrorPage />,
   },
   {
     path: 'join',

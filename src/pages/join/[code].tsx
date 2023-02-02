@@ -10,7 +10,7 @@ export async function loader({ params }: any) {
   return new Promise<string>((resolve) => {
     if (params.code) {
       socket.emit('joinLobby', params.code, (res) => {
-        if (res === 'ok') {
+        if (res) {
           console.log('Successfully joined lobby!');
           code = params.code;
         } else {
@@ -31,7 +31,7 @@ export default function Join() {
   const handleNameSubmit = (name: string) => {
     // check name?
     socket.emit('namePlayer', lobbyName, name, (res) => {
-      if (res === 'ok') {
+      if (res) {
         // console.log('Player was named');
         if (typeof code === 'string' && code !== '-1') {
           console.log(name);

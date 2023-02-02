@@ -31,7 +31,14 @@ export default function App() {
     <Container sx={{ display: 'flex', justifyContent: 'center' }}>
       <Stack spacing={1}>
         <div className="App">
-          <h1>Sham Illustrator</h1>
+          <h1>
+            <span
+              style={{ textDecoration: 'line-through', color: 'lightgray' }}
+            >
+              Fake Artist
+            </span>{' '}
+            Sham Illustrator
+          </h1>
           <Outlet
             context={{
               roleContext: [role, setRole],

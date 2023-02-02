@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Stack } from '@mui/system';
 
 import Canvas from './canvas/Canvas';
-import Toolbar from './canvas/Toolbar';
+import Toolbar from './Toolbar';
 import socket from '../../helpers/getSocket';
 import { useCanvas } from '../../hooks/useCanvas';
 import CanvasDrawer from '../../helpers/CanvasDrawer';
@@ -34,7 +34,11 @@ export default function Game(): JSX.Element {
   return (
     <Stack spacing={1} maxWidth={606}>
       <Canvas penSize={penSize} penColor={penColor}></Canvas>
-      <Toolbar setPenSize={setPenSize} setPenColor={setPenColor}></Toolbar>
+      <Toolbar
+        setPenSize={setPenSize}
+        color={penColor}
+        setPenColor={setPenColor}
+      ></Toolbar>
     </Stack>
   );
 }

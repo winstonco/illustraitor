@@ -3,7 +3,10 @@ import { Popover, Button, IconButton } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import { useRef, useState } from 'react';
 
-export default function PenColor(prop: {
+import { PenColors } from '../../../types/PenColorType';
+
+export default function PenColor(props: {
+  color: string;
   setPenColor: React.Dispatch<React.SetStateAction<string>>;
 }): JSX.Element {
   const button = useRef<HTMLButtonElement>(null);
@@ -11,7 +14,30 @@ export default function PenColor(prop: {
 
   const setColor = (newColor: string): void => {
     setOpen(false);
-    prop.setPenColor(newColor);
+    props.setPenColor(newColor);
+  };
+
+  const makeColorButtons = () => {
+    return PenColors.map((color: PenColors) => {
+      return (
+        <IconButton
+          onClick={() => setColor(color)}
+          sx={{ alignItems: 'flex-start' }}
+          key={color}
+        >
+          <CircleIcon
+            sx={
+              color === props.color
+                ? {
+                    borderBottom: '2px solid black',
+                    color: color,
+                  }
+                : { color: color }
+            }
+          />
+        </IconButton>
+      );
+    });
   };
 
   return (
@@ -40,20 +66,7 @@ export default function PenColor(prop: {
           horizontal: 'center',
         }}
       >
-        <Stack direction={'row'}>
-          <IconButton onClick={() => setColor('black')}>
-            <CircleIcon sx={{ color: 'black' }} />
-          </IconButton>
-          <IconButton onClick={() => setColor('red')}>
-            <CircleIcon sx={{ color: 'red' }} />
-          </IconButton>
-          <IconButton onClick={() => setColor('blue')}>
-            <CircleIcon sx={{ color: 'blue' }} />
-          </IconButton>
-          <IconButton onClick={() => setColor('green')}>
-            <CircleIcon sx={{ color: 'green' }} />
-          </IconButton>
-        </Stack>
+        <Stack direction={'row'}>{makeColorButtons()}</Stack>
       </Popover>
     </>
   );

@@ -5,7 +5,13 @@ import CanvasDrawer from '../../../helpers/CanvasDrawer';
 import socket from '../../../helpers/getSocket';
 import { useCanvas } from '../../../hooks/useCanvas';
 
-export default function Canvas(props: { penSize: number; penColor: string }) {
+export default function Canvas({
+  penSize,
+  penColor,
+}: {
+  penSize: number;
+  penColor: string;
+}) {
   const canvas = useRef<HTMLCanvasElement>(null);
   CanvasDrawer.setup(canvas);
   let drawing: boolean = false;
@@ -21,7 +27,7 @@ export default function Canvas(props: { penSize: number; penColor: string }) {
   ): void => {
     drawing = true;
     const { offsetX, offsetY } = event.nativeEvent;
-    useCanvas(socket.id)[0].beginDrawing(offsetX, offsetY);
+    useCanvas(socket.id)[0].beginDrawing(offsetX, offsetY, penSize, penColor);
     socket.emit('beginDrawing', socket.id, offsetX, offsetY);
   };
 
@@ -30,26 +36,14 @@ export default function Canvas(props: { penSize: number; penColor: string }) {
   ): void => {
     if (drawing) {
       const { offsetX, offsetY } = event.nativeEvent;
-      useCanvas(socket.id)[0].drawTo(
-        offsetX,
-        offsetY,
-        props.penSize,
-        props.penColor
-      );
-      socket.emit(
-        'drawTo',
-        socket.id,
-        offsetX,
-        offsetY,
-        props.penSize,
-        props.penColor
-      );
+      useCanvas(socket.id)[0].drawTo(offsetX, offsetY, penSize, penColor);
+      socket.emit('drawTo', socket.id, offsetX, offsetY, penSize, penColor);
     }
   };
 
   const handleMouseUp = (): void => {
     drawing = false;
-    useCanvas(socket.id)[0].endDrawing();
+    useCanvas(socket.id)[0].endDrawing(penSize, penColor);
     socket.emit('endDrawing', socket.id);
   };
 

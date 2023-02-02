@@ -81,10 +81,19 @@ export default function Changelog() {
       <Typography variant="body1" my={'1rem'}>
         {about}
       </Typography>
-      <Typography variant="h5" marginTop={'1rem'} marginBottom={'0.5rem'}>
-        Changelog:
-      </Typography>
-      <div style={{ fontFamily: 'sans-serif' }}>{log}</div>
+      <div
+        style={{
+          overflowY: 'scroll',
+          height: '70vh',
+          background: '#f2f2f2',
+          paddingLeft: '1rem',
+        }}
+      >
+        <Typography variant="h5" marginTop={'1rem'} marginBottom={'0.5rem'}>
+          Changelog:
+        </Typography>
+        <div style={{ fontFamily: 'sans-serif' }}>{log}</div>
+      </div>
     </>
   );
 }

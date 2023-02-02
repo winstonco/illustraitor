@@ -18,7 +18,7 @@ export default function Home() {
     const name = nanoid(12);
     if (name) {
       socket.emit('createLobby', name, (res) => {
-        if (res === 'ok') {
+        if (res) {
           setLobbyName(name);
           // console.log('Successfully created lobby!');
           navigate(`/join/${name}`);

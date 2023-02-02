@@ -12,11 +12,16 @@ export default class CanvasDrawerInstance {
     this.lastPos = [0, 0];
   }
 
-  beginDrawing = (startX: number, startY: number): void => {
+  beginDrawing = (
+    startX: number,
+    startY: number,
+    width?: number,
+    color?: string
+  ): void => {
     this.isDrawing = true;
     this.lastPos = [startX, startY];
     this.lastLastPos = undefined;
-    CanvasDrawer.dot(startX, startY);
+    CanvasDrawer.dot(startX, startY, width, color);
   };
 
   drawTo = (toX: number, toY: number, width?: number, color?: string): void => {
@@ -25,9 +30,9 @@ export default class CanvasDrawerInstance {
     }
   };
 
-  endDrawing = (): void => {
+  endDrawing = (width?: number, color?: string): void => {
     this.isDrawing = false;
-    CanvasDrawer.dot(this.lastPos[0], this.lastPos[1]);
+    CanvasDrawer.dot(this.lastPos[0], this.lastPos[1], width, color);
   };
 
   // Redundancy with CanvasDrawer

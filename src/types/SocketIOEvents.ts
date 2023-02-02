@@ -5,6 +5,8 @@ import { Socket } from 'socket.io-client';
 import IGlobalGameEvents from './GlobalGameEvents.js';
 import { GameRole } from './GameRole.js';
 
+type ResponseType = boolean;
+
 interface ServerToClientEvents extends IGlobalGameEvents {
   readyCheck: (
     callback: (err: Error | null, res: { response: 'ok' }) => void
@@ -22,8 +24,6 @@ interface ServerToClientEvents extends IGlobalGameEvents {
   ) => void;
 }
 
-type ResponseType = 'ok' | 'fail';
-
 interface ClientToServerEvents extends IGlobalGameEvents {
   namePlayer: (
     lobbyName: string,
@@ -40,7 +40,10 @@ interface ClientToServerEvents extends IGlobalGameEvents {
     callback: (response: ResponseType) => void
   ) => void;
   leaveLobby: (callback: (response: ResponseType) => void) => void;
-  startGame: (lobbyName: string) => void;
+  startGame: (
+    lobbyName: string,
+    callback: (response: ResponseType) => void
+  ) => void;
 }
 
 interface InterServerEvents {

@@ -1,4 +1,4 @@
-import { Button, ButtonGroup } from '@mui/material';
+import { Alert, Button, ButtonGroup, Snackbar } from '@mui/material';
 import { Stack } from '@mui/system';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { nanoid } from 'nanoid';
@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import socket from '../../helpers/getSocket';
 import Timer from './Timer';
 import { usePlayerName } from '../../App';
+import CanvasDrawer from '../../helpers/CanvasDrawer';
+import { useState } from 'react';
 
 export default function GameNav({
   lobbyName,
@@ -24,6 +26,7 @@ export default function GameNav({
   isPlaying: boolean;
 }): JSX.Element {
   const [playerName, setPlayerName] = usePlayerName();
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleGetLink = () => {
@@ -39,8 +42,9 @@ export default function GameNav({
     const name = nanoid(12);
     if (name) {
       socket.emit('createLobby', name, (res) => {
-        if (res === 'ok') {
+        if (res) {
           setLobbyName(name);
+          CanvasDrawer.clearCanvas();
           console.log('Successfully created lobby!');
         } else {
           console.log('Failed to create lobby!');
@@ -52,7 +56,7 @@ export default function GameNav({
   const handleLeaveLobby = () => {
     if (lobbyName !== '') {
       socket.emit('leaveLobby', (res) => {
-        if (res === 'ok') {
+        if (res) {
           console.log('Successfully left lobby!');
           setLobbyName('');
           navigate('/');
@@ -66,8 +70,16 @@ export default function GameNav({
 
   const handleStartGame = () => {
     if (lobbyName !== '') {
-      socket.emit('startGame', lobbyName);
+      socket.emit('startGame', lobbyName, (res) => {
+        if (!res) {
+          setSnackbarOpen(true);
+        }
+      });
     }
+  };
+
+  const handleCloseAlert = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -110,6 +122,15 @@ export default function GameNav({
         </ButtonGroup>
         <Timer />
       </Stack>
+      <Snackbar
+        open={snackbarOpen}
+        onClose={handleCloseAlert}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert severity="error" onClose={handleCloseAlert}>
+          Not enough players!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
