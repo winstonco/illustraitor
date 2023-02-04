@@ -1,33 +1,30 @@
-import { Alert, Button, ButtonGroup, Snackbar } from '@mui/material';
-import { Stack } from '@mui/system';
+import { Alert, Button, ButtonGroup, Snackbar, Stack } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { nanoid } from 'nanoid';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 import socket from '../../helpers/getSocket';
 import Timer from './Timer';
 import { usePlayerName } from '../../App';
-import CanvasDrawer from '../../helpers/CanvasDrawer';
-import { useState } from 'react';
+import GuessDialog from './GuessDialog';
+import { useLobby } from '../../hooks/useLobby';
+import EndDialog from './EndDialog';
 
 export default function GameNav({
-  lobbyName,
-  setLobbyName,
   role,
   prompt,
   currentPlayerName,
   isPlaying,
+  playerNames,
 }: {
-  lobbyName: string;
-  setLobbyName: React.Dispatch<React.SetStateAction<string>>;
   role: string;
   prompt: string;
   currentPlayerName: string;
   isPlaying: boolean;
+  playerNames: string[];
 }): JSX.Element {
   const [playerName, setPlayerName] = usePlayerName();
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const { lobbyName, setLobbyName, createLobby, leaveLobby } = useLobby();
 
   const handleGetLink = () => {
     let inviteLink = `${window.location.protocol}//${window.location.hostname}`;
@@ -39,33 +36,11 @@ export default function GameNav({
   };
 
   const handleCreateLobby = () => {
-    const name = nanoid(12);
-    if (name) {
-      socket.emit('createLobby', name, (res) => {
-        if (res) {
-          setLobbyName(name);
-          CanvasDrawer.clearCanvas();
-          console.log('Successfully created lobby!');
-        } else {
-          console.log('Failed to create lobby!');
-        }
-      });
-    }
+    createLobby();
   };
 
   const handleLeaveLobby = () => {
-    if (lobbyName !== '') {
-      socket.emit('leaveLobby', (res) => {
-        if (res) {
-          console.log('Successfully left lobby!');
-          setLobbyName('');
-          navigate('/');
-          return;
-        } else {
-          console.log('Failed to leave lobby!');
-        }
-      });
-    }
+    leaveLobby();
   };
 
   const handleStartGame = () => {
@@ -116,9 +91,11 @@ export default function GameNav({
           size="large"
           sx={{ borderColor: 'black' }}
         >
+          <Button onClick={handleStartGame} variant="contained">
+            Start
+          </Button>
           <Button onClick={handleCreateLobby}>Create New Lobby</Button>
           <Button onClick={handleLeaveLobby}>Leave Lobby</Button>
-          <Button onClick={handleStartGame}>Start</Button>
         </ButtonGroup>
         <Timer />
       </Stack>
@@ -131,6 +108,9 @@ export default function GameNav({
           Not enough players!
         </Alert>
       </Snackbar>
+
+      <GuessDialog playerNames={playerNames} />
+      <EndDialog />
     </div>
   );
 }

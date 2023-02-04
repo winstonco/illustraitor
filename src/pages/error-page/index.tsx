@@ -1,12 +1,12 @@
-import { useNavigate } from 'react-router-dom';
 import { Tooltip, Stack } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDoorClosed, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import { useLobby } from '../../hooks/useLobby';
 
 export default function ErrorPage() {
   const [hoverDoor, setHoverDoor] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const { lobbyName, setLobbyName, createLobby, leaveLobby } = useLobby();
 
   return (
     <Stack
@@ -23,9 +23,7 @@ export default function ErrorPage() {
           icon={hoverDoor ? faDoorOpen : faDoorClosed}
           onMouseEnter={() => setHoverDoor(true)}
           onMouseLeave={() => setHoverDoor(false)}
-          onClick={() => {
-            navigate('/');
-          }}
+          onClick={() => leaveLobby()}
         />
       </Tooltip>
     </Stack>

@@ -3,21 +3,28 @@ import { useEffect, useState } from 'react';
 import Game from './Game';
 import GameNav from './GameNav';
 import socket from '../../helpers/getSocket';
-import { useLobbyName, usePrompt, useRole } from '../../App';
-import { useNavigate } from 'react-router-dom';
+import { usePrompt, useRole } from '../../App';
+import { useLobby } from '../../hooks/useLobby';
 
 export default function Play() {
   const [role, setRole] = useRole();
   const [prompt, setPrompt] = usePrompt();
-  const [lobbyName, setLobbyName] = useLobbyName();
   const [currentPlayerName, setCurrentPlayerName] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-
-  const navigate = useNavigate();
+  const [playerNames, setPlayerNames] = useState<string[]>([]);
+  const { lobbyName, setLobbyName, createLobby, leaveLobby } = useLobby();
 
   // console.log(lobbyName);
 
   useEffect(() => {
+    socket.on('playersInLobby', (playerNames) => {
+      setPlayerNames(playerNames);
+    });
+
+    socket.on('readyCheck', (callback) => {
+      callback(new Error(), { response: 'ok' });
+    });
+
     socket.on('startGame', () => {
       // console.log('Game starting now!');
       setIsPlaying(true);
@@ -38,24 +45,14 @@ export default function Play() {
       socket.on('endTurn', () => {
         // console.log('Your turn ended!');
       });
-
-      socket.on('guessImposter', async (guessTime, callback) => {
-        let responded = false;
-        setTimeout(() => {
-          if (!responded) callback(null, { guess: 'none' });
-        }, guessTime * 1000);
-        const myGuess = window.prompt('who?') ?? 'no one lmao';
-        callback(null, { guess: myGuess });
-        responded = true;
-      });
-    });
-
-    socket.on('readyCheck', (callback) => {
-      callback(new Error(), { response: 'ok' });
     });
 
     socket.on('endGame', () => {
       setIsPlaying(false);
+      // setPlayerNames([]);
+      setCurrentPlayerName('');
+      setRole('');
+      setPrompt('');
     });
 
     return () => {
@@ -75,7 +72,7 @@ export default function Play() {
   useEffect(() => {
     if (!lobbyName) {
       // window.alert('Invalid lobby');
-      navigate('/');
+      leaveLobby();
     }
   }, []);
 
@@ -84,10 +81,9 @@ export default function Play() {
       <GameNav
         role={role}
         prompt={prompt}
-        lobbyName={lobbyName}
-        setLobbyName={setLobbyName}
         currentPlayerName={currentPlayerName}
         isPlaying={isPlaying}
+        playerNames={playerNames}
       />
       <Game />
     </>

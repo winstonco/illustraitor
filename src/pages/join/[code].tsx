@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 
-import { useLobbyName, usePlayerName } from '../../App';
+import { usePlayerName } from '../../App';
 import socket from '../../helpers/getSocket';
+import { useLobby } from '../../hooks/useLobby';
 import EnterName from './EnterName';
 
 export async function loader({ params }: any) {
@@ -23,7 +24,7 @@ export async function loader({ params }: any) {
 }
 
 export default function Join() {
-  const [lobbyName, setLobbyName] = useLobbyName();
+  const { lobbyName, setLobbyName, createLobby, leaveLobby } = useLobby();
   const [playerName, setPlayerName] = usePlayerName();
   const navigate = useNavigate();
   const code = useLoaderData();
@@ -34,9 +35,7 @@ export default function Join() {
       if (res) {
         // console.log('Player was named');
         if (typeof code === 'string' && code !== '-1') {
-          console.log(name);
           setPlayerName(name);
-          setLobbyName(code);
           navigate('/play');
         }
       } else {

@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Stack } from '@mui/system';
 import { useState, useEffect } from 'react';
@@ -25,7 +26,12 @@ type ChangelogType = {
 
 export default function Changelog() {
   const [about, setAbout] = useState<string>('Loading:');
-  const [log, setLog] = useState<JSX.Element[]>([<p key={0}>Loading</p>]);
+  const [log, setLog] = useState<JSX.Element[]>([
+    <div key={0}>
+      Loading Changelog
+      <CircularProgress />
+    </div>,
+  ]);
 
   useEffect(() => {
     const changePropToJSX = (prop: UpdateType): JSX.Element => {

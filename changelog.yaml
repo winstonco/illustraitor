@@ -23,6 +23,24 @@ meta: { about: 'A party game where everyone is an artist,
 versions:
   [
     {
+      version: 1.0.0,
+      note: 'Full game cycle is playable now!',
+      updates:
+        [
+          {
+            type: 'Added',
+            list: ['Guess imposter dialog', 'End of game results dialog'],
+          },
+          {
+            type: 'Fixed',
+            list:
+              [
+                "Bug where starting a new game from an old lobby wouldn't start properly",
+              ],
+          },
+        ],
+    },
+    {
       version: 0.2.1,
       note: 'Gameplay and QOL updates.',
       updates:
@@ -39,6 +57,13 @@ versions:
           {
             type: 'Changed',
             list: ['Minimum of 3 players required to start game'],
+          },
+          {
+            type: 'Fixed',
+            list:
+              [
+                'Bug where dots at the beginning and end of lines were colored black',
+              ],
           },
         ],
     },
