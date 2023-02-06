@@ -28,7 +28,7 @@ export default function Changelog() {
   const [about, setAbout] = useState<string>('Loading:');
   const [log, setLog] = useState<JSX.Element[]>([
     <div key={0}>
-      Loading Changelog
+      {/* Loading Changelog */}
       <CircularProgress />
     </div>,
   ]);
