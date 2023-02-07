@@ -13,8 +13,8 @@ jobs:
           repository: 'winstonco/sham-illustrator-server'
           path: 'sham-illustrator-server'
         uses: actions/setup-node@v3
-          with:
-            node-version: 18
+        with:
+          node-version: 18
 
       - name: install
         run: npm ci --ignore-scripts
