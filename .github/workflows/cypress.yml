@@ -14,6 +14,12 @@ jobs:
           build: npm run build
           start: npm start
           wait-on: 'http://localhost:3000'
+          record: true
+          parallel: true
           browser: chrome
           spec: |
             cypress/e2e/**.cy.ts
+        env:
+          VITE_SERVER_URL: 'https://sham-illustrator-server.onrender.com'
+          VITE_CHANGELOG_URL: '/changelog'
+          PORT: 3000
