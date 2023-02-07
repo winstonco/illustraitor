@@ -1,7 +1,7 @@
 name: Cypress E2E tests
 on: [push]
 jobs:
-  start-test-server:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: clone server repo
@@ -10,7 +10,7 @@ jobs:
           repository: 'winstonco/sham-illustrator-server'
           path: 'sham-illustrator-server'
 
-      - name: build and start
+      - name: build and start server
         run: |
           cd sham-illustrator-server
           npm run build
@@ -26,14 +26,10 @@ jobs:
           MINIMUM_PLAYERS: 3
           TRACE_LEVEL: 2
 
-  test:
-    needs: start-test-server
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
+      - name: checkout client
         uses: actions/checkout@v3
 
-      - name: Cypress run
+      - name: cypress tests
         uses: cypress-io/github-action@v5
         with:
           install: npm ci
