@@ -15,8 +15,9 @@ jobs:
       - run: ls
 
       - name: build
-        run: cd sham-illustrator-server
-        run: npm run build
+        run: |
+          cd sham-illustrator-server
+          npm run build
         env:
           PORT: 5555
           ORIGIN: '*'
