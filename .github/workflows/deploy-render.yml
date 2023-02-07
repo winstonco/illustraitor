@@ -63,4 +63,4 @@ jobs:
     needs: Cypress-tests
     steps:
       - name: deploy hook
-        run: curl https://api.render.com/deploy/srv-cfb247o2i3mjdukklrm0?key=JbipsXZFb9Y
+        run: curl ${{ secrets.RENDER_DEPLOY_HOOK }}
