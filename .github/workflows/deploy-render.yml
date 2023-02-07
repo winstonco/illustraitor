@@ -15,9 +15,10 @@ jobs:
 
       - name: build and start server
         run: |
+          echo 'sup'
           npm ci &&
           npx tsc --build &&
-          npm start &
+          npm start
         env:
           PORT: 5555
           ORIGIN: '*'
