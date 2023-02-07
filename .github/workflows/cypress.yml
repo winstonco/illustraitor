@@ -12,7 +12,10 @@ jobs:
 
       - run: cd sham-illustrator-server
 
+      - run: ls
+
       - name: build
+        run: cd sham-illustrator-server
         run: npm run build
         env:
           PORT: 5555
