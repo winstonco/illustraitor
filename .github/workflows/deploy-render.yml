@@ -27,7 +27,7 @@ jobs:
         working-directory: sham-illustrator-server
 
       - name: start
-        run: npm start
+        run: npm start &
         working-directory: sham-illustrator-server
         env:
           PORT: 5555
