@@ -38,8 +38,9 @@ jobs:
           install: npm ci
           build: npm run build
           start: npm start
-          wait-on: 'http://localhost:5555'
-          wait-on: 'http://localhost:3000'
+          wait-on: |
+            'http://localhost:5555'
+            'http://localhost:3000'
           record: true
           parallel: true
           browser: chrome
@@ -51,6 +52,6 @@ jobs:
           PORT: 3000
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: stop server
         run: npx forever stopall
