@@ -12,6 +12,8 @@ jobs:
         with:
           repository: 'winstonco/sham-illustrator-server'
           path: 'sham-illustrator-server'
+
+      - name: setup node
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -19,11 +21,11 @@ jobs:
       - name: install
         run: npm ci --ignore-scripts
         working-directory: sham-illustrator-server
-      
+
       - name: build
         run: npx tsc --build
         working-directory: sham-illustrator-server
-      
+
       - name: start
         run: npm start
         working-directory: sham-illustrator-server
