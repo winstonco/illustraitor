@@ -14,7 +14,7 @@ jobs:
           build: npm run build
           start: npm start
           wait-on: 'http://localhost:3000'
-          record: true
+          # record: true
           parallel: true
           browser: chrome
           spec: |
@@ -23,3 +23,5 @@ jobs:
           VITE_SERVER_URL: 'https://sham-illustrator-server.onrender.com'
           VITE_CHANGELOG_URL: '/changelog'
           PORT: 3000
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
