@@ -18,6 +18,8 @@ jobs:
           cd sham-illustrator-server &&
           npm run build &&
           npm run start &
+          sleep 5 &&
+          curl http://localhost:5555 -I
         env:
           PORT: 5555
           ORIGIN: '*'
