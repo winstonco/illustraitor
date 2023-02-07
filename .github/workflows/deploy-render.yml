@@ -15,7 +15,6 @@ jobs:
 
       - name: build and start server
         run: |
-          cd sham-illustrator-server
           npm ci &&
           npx tsc --build &&
           npm start &
