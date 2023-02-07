@@ -14,7 +14,8 @@ jobs:
         run: |
           cd sham-illustrator-server
           npm run build
-          npm start
+          npm install forever-monitor
+          forever "npm start dist/server.js"
         env:
           PORT: 5555
           ORIGIN: '*'
@@ -45,7 +46,7 @@ jobs:
           spec: |
             cypress/e2e/**.cy.ts
         env:
-          VITE_SERVER_URL: 'https://sham-illustrator-server.onrender.com'
+          VITE_SERVER_URL: 'http://localhost:5555'
           VITE_CHANGELOG_URL: '/changelog'
           PORT: 3000
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
