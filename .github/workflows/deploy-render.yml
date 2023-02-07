@@ -13,7 +13,7 @@ jobs:
           repository: 'winstonco/sham-illustrator-server'
           path: 'sham-illustrator-server'
 
-      - name: build and start
+      - name: build and start server
         run: |
           cd sham-illustrator-server &&
           npm run build &&
