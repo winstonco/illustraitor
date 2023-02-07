@@ -16,7 +16,7 @@ jobs:
       - name: build and start server
         run: |
           echo 'sup'
-          npm ci &&
+          npm install &&
           npx tsc --build &&
           npm start
         env:
