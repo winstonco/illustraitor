@@ -15,7 +15,7 @@ jobs:
           cd sham-illustrator-server
           npm run build
           npm install forever-monitor
-          forever "npm start dist/server.js"
+          npx forever dist/server.js
         env:
           PORT: 5555
           ORIGIN: '*'
