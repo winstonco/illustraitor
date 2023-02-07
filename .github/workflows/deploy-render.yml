@@ -12,14 +12,21 @@ jobs:
         with:
           repository: 'winstonco/sham-illustrator-server'
           path: 'sham-illustrator-server'
+        uses: actions/setup-node@v3
+          with:
+            node-version: 18
 
-      - name: build and start server
-        run: |
-          npm install &&
-          npx tsc --build &&
-          npm start &
-          echo 'starting server'
-          sleep 30
+      - name: install
+        run: npm ci --ignore-scripts
+        working-directory: sham-illustrator-server
+      
+      - name: build
+        run: npx tsc --build
+        working-directory: sham-illustrator-server
+      
+      - name: start
+        run: npm start
+        working-directory: sham-illustrator-server
         env:
           PORT: 5555
           ORIGIN: '*'
