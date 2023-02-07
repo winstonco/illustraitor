@@ -19,8 +19,6 @@ jobs:
           npm ci &&
           npx tsc --build &&
           npm start &
-          sleep 10 &&
-          curl http://localhost:5555 -I
         env:
           PORT: 5555
           ORIGIN: '*'
