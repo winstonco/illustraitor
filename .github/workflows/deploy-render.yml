@@ -15,10 +15,11 @@ jobs:
 
       - name: build and start server
         run: |
-          echo 'sup'
           npm install &&
           npx tsc --build &&
-          npm start
+          npm start &
+          echo 'starting server'
+          sleep 30
         env:
           PORT: 5555
           ORIGIN: '*'
