@@ -1,7 +1,32 @@
-name: End-to-end tests
+name: Cypress E2E tests
 on: [push]
 jobs:
-  cypress-run:
+  start-test-server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone server repo
+        uses: actions/checkout@v3
+        with:
+          repository: 'winstonco/sham-illustrator-server'
+          path: '/'
+
+      - name: build
+        run: npm run build
+        env:
+          PORT: 5555
+          ORIGIN: *
+          OUT_OF_GAME_DRAW_ENABLED: true
+          TURN_LENGTH: 3
+          CLEAR_ON_END: true
+          TIME_TO_GUESS: 10
+          MINIMUM_PLAYERS: 3
+          TRACE_LEVEL: 2
+
+      - name: start
+        run: npm start
+
+  test:
+    needs: start-test-server
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
