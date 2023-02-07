@@ -10,9 +10,7 @@ jobs:
           repository: 'winstonco/sham-illustrator-server'
           path: 'sham-illustrator-server'
 
-      - run: cd sham-illustrator-server
-
-      - run: ls
+      - working-directory: sham-illustrator-server
 
       - name: build
         run: |
