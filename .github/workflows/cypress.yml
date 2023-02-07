@@ -54,4 +54,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: stop server
+        if: always()
         run: npx forever stopall
