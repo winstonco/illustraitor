@@ -1,7 +1,7 @@
 name: Deploy to Render
 on: [push]
 jobs:
-  Cypress tests:
+  Cypress-tests:
     runs-on: ubuntu-latest
     steps:
       - name: checkout-client
@@ -49,7 +49,7 @@ jobs:
 
   Deploy:
     runs-on: ubuntu-latest
-    needs: 'Cypress tests'
+    needs: Cypress-tests
     steps:
       - name: deploy hook
         run: curl https://api.render.com/deploy/srv-cfb247o2i3mjdukklrm0?key=JbipsXZFb9Y
