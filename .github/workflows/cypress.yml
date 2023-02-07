@@ -4,6 +4,9 @@ jobs:
   start-test-server:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout-client
+        uses: actions/checkout@v3
+
       - name: clone server repo
         uses: actions/checkout@v3
         with:
@@ -12,10 +15,9 @@ jobs:
 
       - name: build and start
         run: |
-          cd sham-illustrator-server
-          npm run build
-          npm install forever
-          npx forever dist/server.js
+          cd sham-illustrator-server &&
+          npm run build &&
+          npm run start &
         env:
           PORT: 5555
           ORIGIN: '*'
@@ -25,12 +27,6 @@ jobs:
           TIME_TO_GUESS: 10
           MINIMUM_PLAYERS: 3
           TRACE_LEVEL: 2
-
-  Cypress-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout-client
-        uses: actions/checkout@v3
 
       - name: Cypress tests
         uses: cypress-io/github-action@v5
