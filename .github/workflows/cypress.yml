@@ -1,7 +1,7 @@
 name: Cypress E2E tests
 on: [push]
 jobs:
-  test:
+  Cypress-Tests:
     runs-on: ubuntu-latest
     steps:
       - name: clone server repo
@@ -14,7 +14,7 @@ jobs:
         run: |
           cd sham-illustrator-server
           npm run build
-          npm install forever-monitor
+          npm install forever
           npx forever dist/server.js
         env:
           PORT: 5555
