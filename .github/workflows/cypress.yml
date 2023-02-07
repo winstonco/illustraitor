@@ -1,7 +1,7 @@
 name: Cypress E2E tests
 on: [push]
 jobs:
-  Cypress-Tests:
+  start-test-server:
     runs-on: ubuntu-latest
     steps:
       - name: clone server repo
@@ -10,7 +10,7 @@ jobs:
           repository: 'winstonco/sham-illustrator-server'
           path: 'sham-illustrator-server'
 
-      - name: build and start server
+      - name: build and start
         run: |
           cd sham-illustrator-server
           npm run build
@@ -26,15 +26,19 @@ jobs:
           MINIMUM_PLAYERS: 3
           TRACE_LEVEL: 2
 
-      - name: checkout client
+  Cypress-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout-client
         uses: actions/checkout@v3
 
-      - name: cypress tests
+      - name: Cypress tests
         uses: cypress-io/github-action@v5
         with:
           install: npm ci
           build: npm run build
           start: npm start
+          wait-on: 'http://localhost:5555'
           wait-on: 'http://localhost:3000'
           record: true
           parallel: true
@@ -47,3 +51,6 @@ jobs:
           PORT: 3000
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: stop server
+        run: npx forever stopall
