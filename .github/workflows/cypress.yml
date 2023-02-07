@@ -9,6 +9,7 @@ jobs:
         with:
           repository: 'winstonco/sham-illustrator-server'
           path: 'sham-illustrator-server'
+        run: cd sham-illustrator-server
 
       - name: build
         run: npm run build
