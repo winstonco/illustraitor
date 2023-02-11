@@ -4,6 +4,7 @@ import { Socket } from 'socket.io-client';
 
 import IGlobalGameEvents from './GlobalGameEvents.js';
 import { GameRole } from './GameRole.js';
+import GameSettings from './GameSettings.js';
 
 type ResponseType = boolean;
 
@@ -12,18 +13,20 @@ interface ServerToClientEvents extends IGlobalGameEvents {
     callback: (err: Error | null, res: { response: 'ok' }) => void
   ) => void;
   playersInLobby: (playerNames: string[]) => void;
+  startGame: () => void;
   role: (role: GameRole) => void;
   prompt: (prompt: string) => void;
+  startRound: () => void;
   startTurnAll: (currentPlayerName: string) => void;
   startTurn: (turnTime: number) => void;
   endTurn: () => void;
-  startGame: () => void;
   guessImposter: (
     guessTime: number,
     callback: (err: Error | null, res: { guess: string }) => void
   ) => void;
   votingFinished: (majorityVote: { name: string; count: number }) => void;
-  endGame: (imposterWasFound: boolean) => void;
+  endRound: () => void;
+  endGame: (impostersFound: string[], winners: GameRole) => void;
 }
 
 interface ClientToServerEvents extends IGlobalGameEvents {
@@ -34,6 +37,7 @@ interface ClientToServerEvents extends IGlobalGameEvents {
   ) => void;
   createLobby: (
     lobbyName: string,
+    settings: GameSettings,
     callback: (response: ResponseType) => void,
     lobbySize?: number
   ) => void;

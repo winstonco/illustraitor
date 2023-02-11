@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid';
 import { useNavigate } from 'react-router-dom';
 
 import socket from '../helpers/getSocket';
+import GameSettings from '../types/GameSettings';
 
 let lobbyName = '';
 
@@ -13,11 +14,11 @@ export const useLobby = () => {
     lobbyName = name;
   };
 
-  const createLobby = () => {
+  const createLobby = (settings: GameSettings) => {
     // const name = window.prompt('Lobby Name');
     const name = nanoid(12);
     if (name) {
-      socket.emit('createLobby', name, (res) => {
+      socket.emit('createLobby', name, settings, (res) => {
         if (res) {
           console.log(name);
           setLobbyName(name);

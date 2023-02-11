@@ -21,9 +21,13 @@ export default function Timer(): JSX.Element {
       startTimer(guessTime);
     });
 
-    return () => {
-      socket.removeAllListeners('startTurn');
-    };
+    socket.on('votingFinished', () => {
+      setTime(0);
+    });
+
+    socket.on('endRound', () => {
+      setTime(0);
+    });
   }, [startTimer]);
 
   useEffect(() => {

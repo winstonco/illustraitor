@@ -10,7 +10,7 @@ import {
   Button,
 } from '@mui/material';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import socket from '../../helpers/getSocket';
+import socket from '../../../helpers/getSocket';
 
 export default function GuessDialog({
   playerNames,
@@ -23,6 +23,7 @@ export default function GuessDialog({
 
   useEffect(() => {
     socket.on('guessImposter', async (guessTime, callback) => {
+      console.log('guess imposter');
       setGuessDialogOpen(true);
       const guess = await new Promise<string>((res) => {
         setTimeout(() => {
@@ -38,7 +39,7 @@ export default function GuessDialog({
     });
 
     return () => {
-      socket.removeAllListeners('guessImposter');
+      // socket.removeAllListeners('guessImposter');
     };
   }, [resolver]);
 

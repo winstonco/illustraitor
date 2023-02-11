@@ -23,6 +23,25 @@ meta: { about: 'A party game where everyone is an artist,
 versions:
   [
     {
+      version: 2.0.0,
+      note: 'Settings update!',
+      updates:
+        [
+          {
+            type: 'Added',
+            list:
+              [
+                'Support for multiple rounds',
+                'New settings:',
+                'Turn Length',
+                'Guess Time',
+                'Imposter Count',
+              ],
+          },
+          { type: 'Fixed', list: ['Long prompts were not wrapping correctly'] },
+        ],
+    },
+    {
       version: 1.0.0,
       note: 'Full game cycle is playable now!',
       updates:

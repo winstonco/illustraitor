@@ -3,18 +3,20 @@ import { useEffect, useState } from 'react';
 import Game from './Game';
 import GameNav from './GameNav';
 import socket from '../../helpers/getSocket';
-import { usePrompt, useRole } from '../../App';
+import { usePrompt, useRole, useSettings } from '../../App';
 import { useLobby } from '../../hooks/useLobby';
+import Dialogs from './dialogs/Dialogs';
+
+export const canvasWidth = 600;
 
 export default function Play() {
   const [role, setRole] = useRole();
   const [prompt, setPrompt] = usePrompt();
+  const [settings, setSettings] = useSettings();
   const [currentPlayerName, setCurrentPlayerName] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playerNames, setPlayerNames] = useState<string[]>([]);
-  const { lobbyName, setLobbyName, createLobby, leaveLobby } = useLobby();
-
-  // console.log(lobbyName);
+  const { lobbyName, leaveLobby } = useLobby();
 
   useEffect(() => {
     socket.on('playersInLobby', (playerNames) => {
@@ -26,12 +28,11 @@ export default function Play() {
     });
 
     socket.on('startGame', () => {
-      // console.log('Game starting now!');
+      console.log('Game starting now!');
       setIsPlaying(true);
 
       socket.on('role', (role) => {
         setRole(role === 'real' ? 'Real' : 'Imposter');
-        // console.log(role);
       });
 
       socket.on('prompt', setPrompt);
@@ -39,15 +40,16 @@ export default function Play() {
       socket.on('startTurnAll', setCurrentPlayerName);
 
       socket.on('startTurn', () => {
-        // console.log("It's your turn!");
+        console.log("It's your turn!");
       });
 
       socket.on('endTurn', () => {
-        // console.log('Your turn ended!');
+        console.log('Your turn ended!');
       });
     });
 
     socket.on('endGame', () => {
+      console.log('Game ending!');
       setIsPlaying(false);
       // setPlayerNames([]);
       setCurrentPlayerName('');
@@ -62,7 +64,6 @@ export default function Play() {
       socket.removeAllListeners('startTurnAll');
       socket.removeAllListeners('startTurn');
       socket.removeAllListeners('endTurn');
-      socket.removeAllListeners('guessImposter');
       socket.removeAllListeners('readyCheck');
       socket.removeAllListeners('endGame');
     };
@@ -77,15 +78,18 @@ export default function Play() {
   }, []);
 
   return (
-    <>
+    <div style={{ width: canvasWidth }}>
       <GameNav
         role={role}
         prompt={prompt}
         currentPlayerName={currentPlayerName}
         isPlaying={isPlaying}
         playerNames={playerNames}
+        settings={settings}
       />
       <Game />
-    </>
+      <Dialogs playerNames={playerNames} />
+      {/* <GuessDialog playerNames={playerNames} /> */}
+    </div>
   );
 }

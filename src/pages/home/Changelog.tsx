@@ -1,6 +1,4 @@
-import { CircularProgress } from '@mui/material';
-import Typography from '@mui/material/Typography';
-import { Stack } from '@mui/system';
+import { CircularProgress, Divider, Stack, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
 import useFetchAndRevalidate from '../../hooks/useFetchAndRevalidate';
 
@@ -87,11 +85,11 @@ export default function Changelog() {
       <Typography variant="body1" my={'1rem'}>
         {about}
       </Typography>
+      <Divider />
       <div
         style={{
-          overflowY: 'scroll',
-          height: '70vh',
           background: '#f2f2f2',
+          marginTop: '1rem',
           paddingLeft: '1rem',
         }}
       >

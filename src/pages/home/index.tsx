@@ -1,32 +1,41 @@
-import { Button } from '@mui/material';
+import { Button, Divider, Stack } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useNavigate } from 'react-router-dom';
-import { Stack } from '@mui/system';
 import { useState } from 'react';
 
 import Changelog from './Changelog';
 import { useLobby } from '../../hooks/useLobby';
+import SettingsDialog from './SettingsDialog';
+import { useSettings } from '../../App';
+import Typography from '@mui/material/Typography/Typography';
+import { GameSettingsKeys } from '../../types/GameSettings';
 
 export default function Home() {
   const [hoverCreateLobby, setHoverCreateLobby] = useState<boolean>(false);
   const [hoverJoinLobby, setHoverJoinLobby] = useState<boolean>(false);
   const [hoverSettings, setHoverSettings] = useState<boolean>(false);
-  const { lobbyName, setLobbyName, createLobby, leaveLobby } = useLobby();
+  const [settings, setSettings] = useSettings();
+
+  const { createLobby } = useLobby();
+  const [settingsDialogIsOpen, setSettingsDialogIsOpen] =
+    useState<boolean>(false);
 
   const navigate = useNavigate();
 
   const handleCreateLobby = () => {
-    createLobby();
+    createLobby(settings);
   };
 
   const handleJoinLobby = () => {
     navigate(`/join`);
   };
 
-  const handleClickSettings = () => {};
+  const handleClickSettings = () => {
+    setSettingsDialogIsOpen(true);
+  };
 
   return (
-    <Stack>
+    <Stack gap={'1rem'}>
       <Stack direction="row" gap={'1rem'}>
         <Button
           variant={hoverCreateLobby ? 'contained' : 'outlined'}
@@ -45,8 +54,7 @@ export default function Home() {
           I Have A Code
         </Button>
         <Button
-          variant="contained" //{hoverSettings ? 'contained' : 'outlined'}
-          disabled
+          variant={hoverSettings ? 'contained' : 'outlined'}
           onMouseEnter={() => setHoverSettings(true)}
           onMouseLeave={() => setHoverSettings(false)}
           onClick={handleClickSettings}
@@ -54,8 +62,36 @@ export default function Home() {
           <SettingsIcon />
           Settings
         </Button>
+        <SettingsDialog
+          settingsIsOpen={settingsDialogIsOpen}
+          setSettingsIsOpen={setSettingsDialogIsOpen}
+          settings={settings}
+          setSettings={setSettings}
+        />
       </Stack>
-      {/* <Changelog /> */}
+      <Stack>
+        <Typography variant="h5">Current lobby settings</Typography>
+        <Typography variant="subtitle1">
+          {GameSettingsKeys.map((key) => {
+            let value: any = settings[key];
+            switch (key) {
+              case 'Number of Rounds':
+                value = 'Default';
+                break;
+              case 'Custom Prompts':
+                if (settings[key]?.length === 0) value = 'None';
+                break;
+            }
+            return (
+              <p key={key}>
+                {key}: {value}
+              </p>
+            );
+          })}
+        </Typography>
+        <Divider></Divider>
+        <Changelog />
+      </Stack>
     </Stack>
   );
 }

@@ -5,9 +5,9 @@ import { useState } from 'react';
 import socket from '../../helpers/getSocket';
 import Timer from './Timer';
 import { usePlayerName } from '../../App';
-import GuessDialog from './GuessDialog';
 import { useLobby } from '../../hooks/useLobby';
-import EndDialog from './EndDialog';
+import GameSettings from '../../types/GameSettings';
+import Dialogs from './dialogs/Dialogs';
 
 export default function GameNav({
   role,
@@ -15,16 +15,18 @@ export default function GameNav({
   currentPlayerName,
   isPlaying,
   playerNames,
+  settings,
 }: {
   role: string;
   prompt: string;
   currentPlayerName: string;
   isPlaying: boolean;
   playerNames: string[];
+  settings: GameSettings;
 }): JSX.Element {
   const [playerName, setPlayerName] = usePlayerName();
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
-  const { lobbyName, setLobbyName, createLobby, leaveLobby } = useLobby();
+  const { lobbyName, createLobby, leaveLobby } = useLobby();
 
   const handleGetLink = () => {
     let inviteLink = `${window.location.protocol}//${window.location.hostname}`;
@@ -36,7 +38,7 @@ export default function GameNav({
   };
 
   const handleCreateLobby = () => {
-    createLobby();
+    createLobby(settings);
   };
 
   const handleLeaveLobby = () => {
@@ -72,7 +74,7 @@ export default function GameNav({
         <h2 style={{ marginTop: 0, marginBottom: 0 }}>
           {isPlaying ? 'Your Role: ' + role : ''}
         </h2>
-        <h2 style={{ marginTop: 0, marginBottom: 0 }}>
+        <h2 style={{ marginTop: 0, marginBottom: 0, wordWrap: 'normal' }}>
           {isPlaying ? 'Prompt: ' + prompt : ''}
         </h2>
         <h2 style={{ marginTop: 0, marginBottom: 0 }}>
@@ -108,9 +110,6 @@ export default function GameNav({
           Not enough players!
         </Alert>
       </Snackbar>
-
-      <GuessDialog playerNames={playerNames} />
-      <EndDialog />
     </div>
   );
 }

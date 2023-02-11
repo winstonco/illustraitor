@@ -5,16 +5,25 @@ import { Outlet, useOutletContext } from 'react-router-dom';
 import socket from './helpers/getSocket';
 import { useLobby } from './hooks/useLobby';
 import { useCanvas } from './hooks/useCanvas';
+import GameSettings from './types/GameSettings';
 
 export default function App() {
   const [role, setRole] = useState<string>('Real');
   const [prompt, setPrompt] = useState<string>('');
   const [playerName, setPlayerName] = useState<string>('');
-  const { lobbyName, setLobbyName, createLobby, leaveLobby } = useLobby();
+  const [settings, setSettings] = useState<GameSettings>({
+    ['Turn Length']: 15,
+    ['Guess Time']: 10,
+    ['Imposter Count']: 1,
+    ['Number of Rounds']: 1,
+    ['Difficulty']: 'Medium',
+    ['Custom Prompts']: [],
+  });
+  const { leaveLobby } = useLobby();
 
   useEffect(() => {
     socket.on('connect', () => {
-      // console.log(`Socket ID: ${socket.id}`);
+      console.log(`Socket ID: ${socket.id}`);
     });
 
     socket.on('disconnect', () => {
@@ -45,6 +54,7 @@ export default function App() {
               roleContext: [role, setRole],
               promptContext: [prompt, setPrompt],
               playerNameContext: [playerName, setPlayerName],
+              settingsContext: [settings, setSettings],
             }}
           />
         </div>
@@ -57,6 +67,10 @@ type ContextType = {
   roleContext: [string, React.Dispatch<React.SetStateAction<string>>];
   promptContext: [string, React.Dispatch<React.SetStateAction<string>>];
   playerNameContext: [string, React.Dispatch<React.SetStateAction<string>>];
+  settingsContext: [
+    GameSettings,
+    React.Dispatch<React.SetStateAction<GameSettings>>
+  ];
 };
 
 export const useRole = () => {
@@ -72,4 +86,9 @@ export const usePrompt = () => {
 export const usePlayerName = () => {
   const { playerNameContext } = useOutletContext<ContextType>();
   return playerNameContext;
+};
+
+export const useSettings = () => {
+  const { settingsContext } = useOutletContext<ContextType>();
+  return settingsContext;
 };

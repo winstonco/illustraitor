@@ -8,38 +8,38 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import socket from '../../helpers/getSocket';
+import socket from '../../../helpers/getSocket';
 
-export default function EndDialog() {
-  const [endDialogOpen, setEndDialogOpen] = useState<boolean>(false);
+export default function VoteEndDialog() {
+  const [voteEndDialogOpen, setVoteEndDialogOpen] = useState<boolean>(false);
   const [majorityVote, setMajorityVote] = useState<{
     name: string;
     count: number;
   }>();
-  const [imposterFound, setImposterFound] = useState<boolean>();
 
   useEffect(() => {
     socket.on('votingFinished', (majorityVote) => {
       setMajorityVote(majorityVote);
+      setVoteEndDialogOpen(true);
     });
-    socket.on('endGame', (imposterWasFound) => {
-      setEndDialogOpen(true);
-      setImposterFound(imposterWasFound);
+    socket.on('endRound', () => {
+      setVoteEndDialogOpen(false);
     });
 
     return () => {
       socket.removeAllListeners('votingFinished');
+      socket.removeAllListeners('endRound');
     };
   }, []);
 
-  const handleClose = () => {
-    setEndDialogOpen(false);
+  const handleCloseVoteEndDialog = () => {
+    setVoteEndDialogOpen(false);
   };
 
   return (
     <Container>
-      <Dialog open={endDialogOpen} onClose={handleClose}>
-        <DialogTitle>Game Over</DialogTitle>
+      <Dialog open={voteEndDialogOpen} onClose={handleCloseVoteEndDialog}>
+        <DialogTitle>Voting Over</DialogTitle>
         <DialogContent>
           {majorityVote ? (
             <>
@@ -50,16 +50,9 @@ export default function EndDialog() {
           ) : (
             <></>
           )}
-          {imposterFound === undefined ? (
-            <></>
-          ) : imposterFound ? (
-            <h3>Real Artists Win!</h3>
-          ) : (
-            <h3>Imposter Wins!</h3>
-          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>OK</Button>
+          <Button onClick={handleCloseVoteEndDialog}>OK</Button>
         </DialogActions>
       </Dialog>
     </Container>
