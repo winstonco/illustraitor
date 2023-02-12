@@ -1,13 +1,17 @@
 describe('Home Page', () => {
   beforeEach(() => {
     cy.visit('/');
-    cy.contains('Create Lobby').should('not.be.disabled').as('button-create');
+    cy.get('button[aria-label="create lobby button"]')
+      .should('not.be.disabled')
+      .as('button-create');
     cy.get('@button-create').click();
     cy.get('button[type=submit]').should('contain', 'Submit').click();
   });
   it('creates a lobby', () => {
     cy.visit('/');
-    cy.contains('Create Lobby').should('not.be.disabled').as('button-create');
+    cy.get('button[aria-label="create lobby button"]')
+      .should('not.be.disabled')
+      .as('button-create');
     cy.get('@button-create').click();
     cy.url().should('contain', 'join/');
     cy.get('input[type=text]')

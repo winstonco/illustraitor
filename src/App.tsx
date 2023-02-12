@@ -41,14 +41,17 @@ export default function App() {
     <Container sx={{ display: 'flex', justifyContent: 'center' }}>
       <Stack spacing={1}>
         <div className="App">
-          <h1 onClick={() => leaveLobby()} style={{ cursor: 'pointer' }}>
-            <span
-              style={{ textDecoration: 'line-through', color: 'lightgray' }}
-            >
-              Fake Artist
-            </span>{' '}
-            Sham Illustrator
-          </h1>
+          <div
+            style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+          >
+            <img
+              width="600px"
+              onClick={() => leaveLobby()}
+              style={{ cursor: 'pointer' }}
+              src="/logo-final.svg"
+              alt="illustraitor logo"
+            />
+          </div>
           <Outlet
             context={{
               roleContext: [role, setRole],

@@ -36,32 +36,50 @@ export default function Home() {
 
   return (
     <Stack gap={'1rem'}>
-      <Stack direction="row" gap={'1rem'}>
-        <Button
-          variant={hoverCreateLobby ? 'contained' : 'outlined'}
-          onMouseEnter={() => setHoverCreateLobby(true)}
-          onMouseLeave={() => setHoverCreateLobby(false)}
+      <Stack direction="row" gap={'1rem'} justifyContent="center">
+        <button
+          aria-label="create lobby button"
           onClick={handleCreateLobby}
+          onMouseOver={() => setHoverCreateLobby(true)}
+          onMouseOut={() => setHoverCreateLobby(false)}
+          style={{
+            border: 'none',
+            cursor: 'pointer',
+            transform: `scale(${hoverCreateLobby ? '1.02' : '1.0'})`,
+          }}
         >
-          Create Lobby
-        </Button>
-        <Button
-          variant={hoverJoinLobby ? 'contained' : 'outlined'}
-          onMouseEnter={() => setHoverJoinLobby(true)}
-          onMouseLeave={() => setHoverJoinLobby(false)}
+          <img
+            width="200px"
+            src="/create-lobby.svg"
+            alt="create lobby button"
+          />
+        </button>
+        <button
+          aria-label="join lobby button"
           onClick={handleJoinLobby}
+          onMouseOver={() => setHoverJoinLobby(true)}
+          onMouseOut={() => setHoverJoinLobby(false)}
+          style={{
+            border: 'none',
+            cursor: 'pointer',
+            transform: `scale(${hoverJoinLobby ? '1.02' : '1.0'})`,
+          }}
         >
-          I Have A Code
-        </Button>
-        <Button
-          variant={hoverSettings ? 'contained' : 'outlined'}
-          onMouseEnter={() => setHoverSettings(true)}
-          onMouseLeave={() => setHoverSettings(false)}
+          <img width="200px" src="/join-lobby.svg" alt="join lobby button" />
+        </button>
+        <button
+          aria-label="settings button"
           onClick={handleClickSettings}
+          onMouseOver={() => setHoverSettings(true)}
+          onMouseOut={() => setHoverSettings(false)}
+          style={{
+            border: 'none',
+            cursor: 'pointer',
+            transform: `scale(${hoverSettings ? '1.02' : '1.0'})`,
+          }}
         >
-          <SettingsIcon />
-          Settings
-        </Button>
+          <img width="200px" src="/settings.svg" alt="settings button" />
+        </button>
         <SettingsDialog
           settingsIsOpen={settingsDialogIsOpen}
           setSettingsIsOpen={setSettingsDialogIsOpen}

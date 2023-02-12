@@ -2,16 +2,42 @@ describe('Home Page', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.get('div').should('have.class', 'App').as('App');
-    cy.get('@App').contains('Fake Artist Sham Illustrator');
-    cy.contains('Create Lobby').should('not.be.disabled').as('button-create');
-    cy.contains('I Have A Code').should('not.be.disabled').as('button-join');
-    // cy.contains('Settings').should('not.be.disabled').as('button-leave');
+    cy.get('@App').get('img[alt="illustraitor logo"]');
+    cy.get('button[aria-label="create lobby button"]')
+      .should('not.be.disabled')
+      .as('button-create');
+    cy.get('button[aria-label="join lobby button"]')
+      .should('not.be.disabled')
+      .as('button-join');
+    cy.get('button[aria-label="settings button"]')
+      .should('not.be.disabled')
+      .as('button-settings');
   });
   it('has hover effects', () => {
-    cy.get('@button-create').trigger('mouseover');
-    cy.get('@button-create').should('have.class', 'MuiButton-contained');
-    cy.get('@button-join').trigger('mouseover');
-    cy.get('@button-join').should('have.class', 'MuiButton-contained');
+    cy.get('@button-create')
+      .should('have.css', 'transform')
+      .then((transform) => {
+        cy.get('@button-create')
+          .trigger('mouseover')
+          .should('have.css', 'transform')
+          .should('not.eq', transform);
+      });
+    cy.get('@button-join')
+      .should('have.css', 'transform')
+      .then((transform) => {
+        cy.get('@button-create')
+          .trigger('mouseover')
+          .should('have.css', 'transform')
+          .should('not.eq', transform);
+      });
+    cy.get('@button-settings')
+      .should('have.css', 'transform')
+      .then((transform) => {
+        cy.get('@button-create')
+          .trigger('mouseover')
+          .should('have.css', 'transform')
+          .should('not.eq', transform);
+      });
   });
   it('creates a lobby', () => {
     cy.get('@button-create').click();
@@ -36,9 +62,12 @@ describe('Home Page', () => {
   //   cy.get('@button-join').click();
   //   cy.url().should('contain', 'join');
   // });
-  // it('clicks settings', () => {
-  //   cy.contains('Settings').should('not.be.disabled');
-  // });
+  it('opens settings', () => {
+    cy.get('@button-settings').click();
+    cy.contains('Game Settings');
+    cy.get('button').contains('Close').click();
+    cy.should('not.contain', 'Game Settings');
+  });
   it('goes back home-create', () => {
     cy.get('@button-create').click();
     cy.url().should('contain', 'join');
@@ -46,7 +75,7 @@ describe('Home Page', () => {
     cy.url().should('contain', 'play');
     cy.get('div')
       .should('have.class', 'App')
-      .contains('Fake Artist Sham Illustrator')
+      .get('img[alt="illustraitor logo"]')
       .as('title');
     cy.get('@title').click();
     cy.location().then((location) => {
