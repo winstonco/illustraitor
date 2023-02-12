@@ -52,7 +52,7 @@ export default function Changelog() {
 
     const parseChangelog = async () => {
       useFetchAndRevalidate<ChangelogType>(
-        [import.meta.env.VITE_CHANGELOG_URL],
+        [import.meta.env.VITE_CHANGELOG_URL ?? '/changelog'],
         (changelog) => {
           setAbout(changelog!.meta.about);
 
