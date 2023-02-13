@@ -19,23 +19,15 @@
   border-radius: 7px;
 }
 
-button[type='submit']:hover {
+.join-form button[type='submit']:hover {
+  scale: 1.05;
+}
+
+.join-form button[type='submit']:focus {
   scale: 1.05;
 }
 
 button[type='button']:hover {
-  --rotate-deg: 1.5deg;
-  animation: wiggle 0.2s ease-in-out 2;
-}
-
-@keyframes wiggle {
-  0% {
-    rotate: calc(var(--rotate-deg) * -1);
-  }
-  50% {
-    rotate: var(--rotate-deg);
-  }
-  100% {
-    rotate: calc(var(--rotate-deg) * -1);
-  }
+  --rotate-deg: 2deg;
+  animation: wobble 0.2s ease-in-out 2;
 }

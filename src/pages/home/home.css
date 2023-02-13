@@ -16,6 +16,10 @@
   scale: 1.05;
 }
 
+.home-page-button:focus {
+  scale: 1.05;
+}
+
 .wobble {
   animation: wobble var(--rotate-duration) ease-in-out infinite;
 }
