@@ -9,6 +9,7 @@
   --rotate-duration: 2s;
   border: none;
   cursor: pointer;
+  scale: 1;
 }
 
 .home-page-button:hover {

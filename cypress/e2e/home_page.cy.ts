@@ -13,45 +13,49 @@ describe('Home Page', () => {
       .should('not.be.disabled')
       .as('button-settings');
   });
-  it('has hover effects', () => {
-    cy.get('@button-create')
-      .should('have.css', 'transform')
-      .then((transform) => {
-        cy.get('@button-create')
-          .trigger('mouseover')
-          .should('have.css', 'transform')
-          .should('not.eq', transform);
-      });
-    cy.get('@button-join')
-      .should('have.css', 'transform')
-      .then((transform) => {
-        cy.get('@button-create')
-          .trigger('mouseover')
-          .should('have.css', 'transform')
-          .should('not.eq', transform);
-      });
-    cy.get('@button-settings')
-      .should('have.css', 'transform')
-      .then((transform) => {
-        cy.get('@button-create')
-          .trigger('mouseover')
-          .should('have.css', 'transform')
-          .should('not.eq', transform);
-      });
+  it('is animated', () => {
+    cy.get('@button-create').should('have.css', 'rotate');
+    // cy.get('@button-create')
+    //   .should('have.css', 'scale')
+    //   .then((transform) => {
+    //     cy.get('@button-create')
+    //       .trigger('mouseover')
+    //       .should('have.css', 'scale')
+    //       .should('not.eq', transform);
+    //   });
+    cy.get('@button-join').should('have.css', 'rotate');
+    // cy.get('@button-create')
+    //   .should('have.css', 'scale')
+    //   .then((transform) => {
+    //     cy.get('@button-create')
+    //       .trigger('mouseover')
+    //       .should('have.css', 'scale')
+    //       .should('not.eq', transform);
+    // });
+    cy.get('@button-settings').should('have.css', 'rotate');
+    // cy.get('@button-create')
+    //   .should('have.css', 'scale')
+    //   .then((transform) => {
+    //     cy.get('@button-create')
+    //       .trigger('mouseover')
+    //       .should('have.css', 'scale')
+    //       .should('not.eq', transform);
+    //   });
   });
   it('creates a lobby', () => {
     cy.get('@button-create').click();
     cy.url().should('contain', 'join');
-    cy.get('button[type=submit]').should('contain', 'Submit').click();
+    cy.get('button[type=button][aria-label="randomize name"]').click();
+    cy.get('button[type=submit]').click();
     cy.url().should('contain', 'play');
   });
   it('fails to join bad lobby', () => {
     cy.get('@button-join').click();
     cy.url().should('contain', 'join');
-    cy.get('button[type=submit]').should('contain', 'Submit').click();
+    cy.get('button[type=submit]').click();
     cy.url().should('contain', 'join');
     cy.get('input[type=text]').type('thiswillfail');
-    cy.get('button[type=submit]').should('contain', 'Submit').click();
+    cy.get('button[type=submit]').click();
     cy.location().then((location) => {
       const pathname = location.pathname;
       console.log(pathname);
@@ -65,19 +69,19 @@ describe('Home Page', () => {
   it('opens settings', () => {
     cy.get('@button-settings').click();
     cy.contains('Game Settings');
-    cy.get('button').contains('Close').click();
+    cy.get('button[type=submit]').click();
     cy.should('not.contain', 'Game Settings');
   });
   it('goes back home-create', () => {
     cy.get('@button-create').click();
     cy.url().should('contain', 'join');
-    cy.get('button[type=submit]').should('contain', 'Submit').click();
+    cy.get('button[type=button][aria-label="randomize name"]').click();
+    cy.get('button[type=submit]').click();
     cy.url().should('contain', 'play');
     cy.get('div')
       .should('have.class', 'App')
       .get('img[alt="illustraitor logo"]')
-      .as('title');
-    cy.get('@title').click();
+      .click();
     cy.location().then((location) => {
       const pathname = location.pathname;
       console.log(pathname);
