@@ -22,7 +22,7 @@ export default function JoinWithCode() {
         placeholder="Enter lobby code"
         required
       />
-      <button type="submit">
+      <button type="submit" aria-label="submit button">
         <img width="200px" src="/submit-button.svg" alt="submit button" />
       </button>
     </form>

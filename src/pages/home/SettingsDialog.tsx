@@ -139,7 +139,7 @@ export default function SettingsDialog({
           </Stack>
         </DialogContent>
         <DialogActions>
-          <button type="submit" onClick={handleClose}>
+          <button type="submit" aria-label="save button" onClick={handleClose}>
             <img width="100px" src="/save-button.svg" alt="save button" />
           </button>
         </DialogActions>
