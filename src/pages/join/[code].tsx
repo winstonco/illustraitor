@@ -24,7 +24,7 @@ export async function loader({ params }: any) {
 }
 
 export default function Join() {
-  const { lobbyName, setLobbyName, createLobby, leaveLobby } = useLobby();
+  const { lobbyName, setLobbyName } = useLobby();
   const [playerName, setPlayerName] = usePlayerName();
   const navigate = useNavigate();
   const code = useLoaderData();

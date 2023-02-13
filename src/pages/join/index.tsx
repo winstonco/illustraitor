@@ -2,6 +2,8 @@ import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField, Stack } from '@mui/material';
 
+import './join.css';
+
 export default function JoinWithCode() {
   const textField = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -12,16 +14,17 @@ export default function JoinWithCode() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Stack direction="row">
-        <TextField
-          inputRef={textField}
-          id="outlined-basic"
-          label="Enter lobby code"
-          variant="outlined"
-        />
-        <Button type="submit">Submit</Button>
-      </Stack>
+    <form className="join-form" onSubmit={handleSubmit}>
+      <input
+        ref={textField}
+        type="text"
+        alt="lobby code input field"
+        placeholder="Enter lobby code"
+        required
+      />
+      <button type="submit">
+        <img width="200px" src="/submit-button.svg" alt="submit button" />
+      </button>
     </form>
   );
 }

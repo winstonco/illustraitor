@@ -139,9 +139,9 @@ export default function SettingsDialog({
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" onClick={handleClose}>
-            Close
-          </Button>
+          <button type="submit" onClick={handleClose}>
+            <img width="100px" src="/save-button.svg" alt="save button" />
+          </button>
         </DialogActions>
       </Dialog>
     </>

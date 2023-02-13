@@ -1,0 +1,41 @@
+.join-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.join-form > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.join-form input[type='text'] {
+  font-size: 24px;
+  padding: 1rem;
+  border: 4px solid black;
+  border-radius: 7px;
+}
+
+button[type='submit']:hover {
+  scale: 1.05;
+}
+
+button[type='button']:hover {
+  --rotate-deg: 1.5deg;
+  animation: wiggle 0.2s ease-in-out 2;
+}
+
+@keyframes wiggle {
+  0% {
+    rotate: calc(var(--rotate-deg) * -1);
+  }
+  50% {
+    rotate: var(--rotate-deg);
+  }
+  100% {
+    rotate: calc(var(--rotate-deg) * -1);
+  }
+}

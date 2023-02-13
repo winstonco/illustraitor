@@ -1,0 +1,48 @@
+#changelog {
+  background: #f2f2f2;
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
+
+.home-page-button {
+  --rotate-deg: 1.5deg;
+  --rotate-duration: 2s;
+  border: none;
+  cursor: pointer;
+}
+
+.home-page-button:hover {
+  scale: 1.05;
+}
+
+.wobble {
+  animation: wobble var(--rotate-duration) ease-in-out infinite;
+}
+
+.wobble-reverse {
+  animation: wobble-reverse var(--rotate-duration) ease-in-out infinite;
+}
+
+@keyframes wobble {
+  0% {
+    rotate: calc(var(--rotate-deg) * -1);
+  }
+  50% {
+    rotate: var(--rotate-deg);
+  }
+  100% {
+    rotate: calc(var(--rotate-deg) * -1);
+  }
+}
+
+@keyframes wobble-reverse {
+  0% {
+    rotate: var(--rotate-deg);
+  }
+  50% {
+    rotate: calc(var(--rotate-deg) * -1);
+  }
+  100% {
+    rotate: var(--rotate-deg);
+  }
+}

@@ -1,4 +1,4 @@
-import { CircularProgress, Divider, Stack, Typography } from '@mui/material';
+import { CircularProgress, Stack, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
 import useFetchAndRevalidate from '../../hooks/useFetchAndRevalidate';
 
@@ -23,10 +23,9 @@ type ChangelogType = {
 };
 
 export default function Changelog() {
-  const [about, setAbout] = useState<string>('Loading:');
+  const [about, setAbout] = useState<string>('Loading:'); // Currently not using the parsed about section
   const [log, setLog] = useState<JSX.Element[]>([
     <div key={0}>
-      {/* Loading Changelog */}
       <CircularProgress />
     </div>,
   ]);
@@ -82,17 +81,7 @@ export default function Changelog() {
 
   return (
     <>
-      <Typography variant="body1" my={'1rem'}>
-        {about}
-      </Typography>
-      <Divider />
-      <div
-        style={{
-          background: '#f2f2f2',
-          marginTop: '1rem',
-          paddingLeft: '1rem',
-        }}
-      >
+      <div id="changelog">
         <Typography variant="h5" marginTop={'1rem'} marginBottom={'0.5rem'}>
           Changelog:
         </Typography>

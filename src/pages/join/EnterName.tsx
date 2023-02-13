@@ -1,4 +1,4 @@
-import { Button, TextField, Stack } from '@mui/material';
+import { Tooltip } from '@mui/material';
 import { useRef } from 'react';
 import {
   uniqueNamesGenerator,
@@ -21,20 +21,32 @@ export default function EnterName({
     }
   };
 
+  const randomizeName: React.MouseEventHandler<HTMLButtonElement> = () => {
+    if (textField.current)
+      textField.current.value = uniqueNamesGenerator({
+        dictionaries: [adjectives, animals],
+      });
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <Stack direction="row">
-        <TextField
-          inputRef={textField}
-          id="outlined-basic"
-          label="Enter your name"
-          variant="outlined"
-          defaultValue={uniqueNamesGenerator({
-            dictionaries: [adjectives, animals],
-          })}
+    <form className="join-form" onSubmit={handleSubmit}>
+      <div>
+        <input
+          ref={textField}
+          type="text"
+          alt="name input field"
+          placeholder="Enter a name"
+          required
         />
-        <Button type="submit">Submit</Button>
-      </Stack>
+        <Tooltip title="Randomize">
+          <button type="button" onClick={randomizeName}>
+            <img width="75px" src="/dice.svg" alt="randomize name" />
+          </button>
+        </Tooltip>
+      </div>
+      <button type="submit">
+        <img width="200px" src="/play-button.svg" alt="play button" />
+      </button>
     </form>
   );
 }
