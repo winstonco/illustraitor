@@ -23,6 +23,11 @@ meta: { about: 'A party game where everyone is an artist,
 versions:
   [
     {
+      version: 3.0.0,
+      note: 'Visual update!',
+      updates: [{ type: 'Added', list: ['New logo', 'New home page buttons'] }],
+    },
+    {
       version: 2.0.0,
       note: 'Settings update!',
       updates:
