@@ -18,6 +18,8 @@ dotenv.config({
 
 const PORT = process.env.PORT;
 
+const SERVER_URL = process.env.VITE_SERVER_URL;
+
 const app = express();
 
 app.use(express.static('dist'));
@@ -44,4 +46,5 @@ app.get('/*', (req, res) => {
 
 app.listen(PORT, '0.0.0.0', 10000, () => {
   console.log(`listening on port ${PORT}`);
+  console.log(`waiting for server at ${SERVER_URL}`);
 });
