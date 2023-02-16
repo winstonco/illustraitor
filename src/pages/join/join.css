@@ -27,7 +27,7 @@
   scale: 1.05;
 }
 
-button[type='button']:hover {
+#randomize-name-button:hover {
   --rotate-deg: 2deg;
   animation: wobble 0.2s ease-in-out 2;
 }

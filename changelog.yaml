@@ -23,6 +23,21 @@ meta: { about: 'A party game where everyone is an artist,
 versions:
   [
     {
+      version: 3.2.0,
+      updates:
+        [
+          {
+            type: 'Added',
+            list:
+              [
+                'Side panel to cleanly show lobby code and a list of players in the lobby',
+              ],
+          },
+          { type: 'Changed', list: ['Font to "Patrick Hand"'] },
+          { type: 'Fixed', list: ['Prevented dragging of image assets'] },
+        ],
+    },
+    {
       version: 3.1.0,
       updates:
         [

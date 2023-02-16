@@ -42,6 +42,7 @@ export default function Home() {
             width="200px"
             src="/create-lobby.svg"
             alt="create lobby button"
+            draggable="false"
           />
         </button>
         <button
@@ -49,14 +50,24 @@ export default function Home() {
           aria-label="join lobby button"
           onClick={handleJoinLobby}
         >
-          <img width="200px" src="/join-lobby.svg" alt="join lobby button" />
+          <img
+            width="200px"
+            src="/join-lobby.svg"
+            alt="join lobby button"
+            draggable="false"
+          />
         </button>
         <button
           className="home-page-button wobble"
           aria-label="settings button"
           onClick={handleClickSettings}
         >
-          <img width="200px" src="/settings.svg" alt="settings button" />
+          <img
+            width="200px"
+            src="/settings.svg"
+            alt="settings button"
+            draggable="false"
+          />
         </button>
         <SettingsDialog
           settingsIsOpen={settingsDialogIsOpen}

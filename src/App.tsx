@@ -41,15 +41,14 @@ export default function App() {
     <Container sx={{ display: 'flex', justifyContent: 'center' }}>
       <Stack spacing={1}>
         <div className="App">
-          <div
-            style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-          >
+          <div id="logo">
             <img
               width="600px"
               onClick={() => leaveLobby()}
               style={{ cursor: 'pointer' }}
               src="/logo-final.svg"
               alt="illustraitor logo"
+              draggable="false"
             />
           </div>
           <Outlet

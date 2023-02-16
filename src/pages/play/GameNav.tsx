@@ -1,5 +1,4 @@
 import { Alert, Button, ButtonGroup, Snackbar, Stack } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useState } from 'react';
 
 import socket from '../../helpers/getSocket';
@@ -7,7 +6,6 @@ import Timer from './Timer';
 import { usePlayerName } from '../../App';
 import { useLobby } from '../../hooks/useLobby';
 import GameSettings from '../../types/GameSettings';
-import Dialogs from './dialogs/Dialogs';
 
 export default function GameNav({
   role,
@@ -27,15 +25,6 @@ export default function GameNav({
   const [playerName, setPlayerName] = usePlayerName();
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const { lobbyName, createLobby, leaveLobby } = useLobby();
-
-  const handleGetLink = () => {
-    let inviteLink = `${window.location.protocol}//${window.location.hostname}`;
-    if (window.location.hostname === 'localhost')
-      inviteLink += `:${window.location.port}`;
-    inviteLink += `/join/${lobbyName}`;
-    console.log(inviteLink);
-    navigator.clipboard.writeText(inviteLink);
-  };
 
   const handleCreateLobby = () => {
     createLobby(settings);
@@ -62,22 +51,14 @@ export default function GameNav({
   return (
     <div className="game-nav">
       <Stack alignItems="flex-start">
-        <h2 style={{ marginTop: 0, marginBottom: '0.5rem' }}>
-          Name: {playerName}
-        </h2>
-        <h2 style={{ marginTop: 0, marginBottom: '0.5rem' }}>
-          In Lobby: {lobbyName}
-        </h2>
-        <Button onClick={handleGetLink}>
-          <ContentCopyIcon /> Copy Invite Link
-        </Button>
-        <h2 style={{ marginTop: 0, marginBottom: 0 }}>
+        <h2 className="game-nav-item">Name: {playerName}</h2>
+        <h2 className="game-nav-item">
           {isPlaying ? 'Your Role: ' + role : ''}
         </h2>
-        <h2 style={{ marginTop: 0, marginBottom: 0, wordWrap: 'normal' }}>
+        <h2 className="game-nav-item">
           {isPlaying ? 'Prompt: ' + prompt : ''}
         </h2>
-        <h2 style={{ marginTop: 0, marginBottom: 0 }}>
+        <h2 className="game-nav-item">
           {isPlaying ? 'Current Drawer: ' + currentPlayerName : ''}
         </h2>
       </Stack>
@@ -87,6 +68,7 @@ export default function GameNav({
         padding={1}
         alignItems="center"
         justifyContent="space-between"
+        marginTop="10px"
       >
         <ButtonGroup
           variant="outlined"

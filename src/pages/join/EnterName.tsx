@@ -40,16 +40,27 @@ export default function EnterName({
         />
         <Tooltip title="Randomize">
           <button
+            id="randomize-name-button"
             type="button"
             onClick={randomizeName}
             aria-label="randomize name"
           >
-            <img width="75px" src="/dice.svg" alt="randomize name" />
+            <img
+              width="75px"
+              src="/dice.svg"
+              alt="randomize name"
+              draggable="false"
+            />
           </button>
         </Tooltip>
       </div>
       <button type="submit" aria-label="play button">
-        <img width="200px" src="/play-button.svg" alt="play button" />
+        <img
+          width="200px"
+          src="/play-button.svg"
+          alt="play button"
+          draggable="false"
+        />
       </button>
     </form>
   );

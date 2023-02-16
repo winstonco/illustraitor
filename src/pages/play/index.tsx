@@ -6,6 +6,8 @@ import socket from '../../helpers/getSocket';
 import { usePrompt, useRole, useSettings } from '../../App';
 import { useLobby } from '../../hooks/useLobby';
 import Dialogs from './dialogs/Dialogs';
+import './play.css';
+import SidePanel from './SidePanel';
 
 export const canvasWidth = 600;
 
@@ -19,8 +21,8 @@ export default function Play() {
   const { lobbyName, leaveLobby } = useLobby();
 
   useEffect(() => {
-    socket.on('playersInLobby', (playerNames) => {
-      setPlayerNames(playerNames);
+    socket.on('playersInLobby', (newPlayerNames) => {
+      setPlayerNames(newPlayerNames);
     });
 
     socket.on('readyCheck', (callback) => {
@@ -74,6 +76,8 @@ export default function Play() {
     if (!lobbyName) {
       // window.alert('Invalid lobby');
       leaveLobby();
+    } else {
+      socket.emit('loaded', lobbyName);
     }
   }, []);
 
@@ -89,7 +93,7 @@ export default function Play() {
       />
       <Game />
       <Dialogs playerNames={playerNames} />
-      {/* <GuessDialog playerNames={playerNames} /> */}
+      <SidePanel playerNames={playerNames} />
     </div>
   );
 }

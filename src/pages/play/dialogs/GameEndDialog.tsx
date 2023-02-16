@@ -37,7 +37,7 @@ export default function GameEndDialog() {
       <Dialog open={gameEndDialogOpen} onClose={handleCloseGameEndDialog}>
         <DialogTitle>Game Over</DialogTitle>
         <DialogContent>
-          <h3>Imposters Found:</h3>
+          <h3>Imposter(s) Found:</h3>
           {impostersFound.map((imposter) => (
             <p key={imposter}>{imposter}</p>
           ))}

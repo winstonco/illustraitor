@@ -39,9 +39,5 @@ export default function Timer(): JSX.Element {
     }
   }, [time]);
 
-  return (
-    <Typography my={0} sx={{ fontSize: '1.3rem' }} variant="button">
-      Time Left: {time}
-    </Typography>
-  );
+  return <span className="timer">Time Left: {time}</span>;
 }

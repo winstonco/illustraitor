@@ -1,0 +1,52 @@
+.game-nav {
+  font-family: 'Patrick Hand', sans-serif;
+}
+
+.game-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 2.5rem;
+  line-height: 2.5rem;
+  margin: 0;
+}
+
+.timer {
+  font-size: 2rem;
+}
+
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: max(calc(50% - 300px - 300px), 0px);
+  height: 100%;
+}
+
+.side-panel-content {
+  border: 3px solid black;
+  border-radius: 20px;
+  padding: 15px;
+  font-family: 'Patrick Hand', sans-serif;
+}
+
+.side-panel-content p {
+  margin: 0;
+  font-size: 2em;
+  line-height: 1.4em;
+}
+
+.side-panel-content hr {
+  border: 0;
+  border-top: 3px solid black;
+}
+
+.side-panel-content ul {
+  margin: 0;
+}
+
+.side-panel-content li {
+  font-size: 1.5em;
+}
