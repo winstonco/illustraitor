@@ -84,7 +84,6 @@ describe('Home Page', () => {
       .click();
     cy.location().then((location) => {
       const pathname = location.pathname;
-      console.log(pathname);
       expect(pathname).equal('/');
     });
   });

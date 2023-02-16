@@ -18,7 +18,7 @@ export default function SidePanel({ playerNames }: { playerNames: string[] }) {
     <div className="side-panel">
       <div className="side-panel-content">
         <p>Lobby Code:</p>
-        <p>{lobbyName}</p>
+        <p id="lobby-code">{lobbyName}</p>
         <Button onClick={handleCopyLink}>
           <ContentCopyIcon /> Copy Invite Link
         </Button>

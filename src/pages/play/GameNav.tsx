@@ -75,11 +75,22 @@ export default function GameNav({
           size="large"
           sx={{ borderColor: 'black' }}
         >
-          <Button onClick={handleStartGame} variant="contained">
+          <Button
+            onClick={handleStartGame}
+            variant="contained"
+            aria-label="start button"
+          >
             Start
           </Button>
-          <Button onClick={handleCreateLobby}>Create New Lobby</Button>
-          <Button onClick={handleLeaveLobby}>Leave Lobby</Button>
+          <Button
+            onClick={handleCreateLobby}
+            aria-label="create new lobby button"
+          >
+            Create New Lobby
+          </Button>
+          <Button onClick={handleLeaveLobby} aria-label="leave lobby button">
+            Leave Lobby
+          </Button>
         </ButtonGroup>
         <Timer />
       </Stack>

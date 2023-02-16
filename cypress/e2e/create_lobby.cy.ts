@@ -29,25 +29,46 @@ describe('Create Lobby', () => {
           expect(lobbyCode.length).equal(12);
           cy.get('button[type=submit]').click();
           cy.url().should('contain', 'play');
-          cy.get('h2')
-            .contains('Name: ')
-            .then((name) => {
-              const shownName = name.text().substring(6);
-              expect(shownName).to.equal(username);
-            });
-          cy.get('h2')
-            .contains('In Lobby')
-            .then((lobby) => {
-              const shownCode = lobby.text().substring(10);
-              expect(shownCode).to.equal(lobbyCode);
-            });
+          if (typeof username === 'string') cy.contains(username);
+          cy.contains(lobbyCode);
         });
       });
   });
+  it('has buttons', () => {
+    cy.get('button').contains('Start'); // ('button[aria-label="start button"]');
+    cy.get('button').contains('Create New Lobby');
+    cy.get('button').contains('Leave Lobby');
+  });
   it('can start', () => {});
-  it('can create new lobby', () => {});
-  it('can leave lobby', () => {});
+  it('can create new lobby', () => {
+    cy.get('#lobby-code')
+      .invoke('contents')
+      .then((code) => {
+        const code1 = code[0].textContent;
+        cy.get('button').contains('Create New Lobby').click();
+        cy.get('button[aria-label="randomize name"]')
+          .should('not.be.disabled')
+          .click();
+        cy.get('button[type=submit]').click();
+        cy.get('#lobby-code')
+          .invoke('contents')
+          .then((code) => {
+            const code2 = code[0].textContent;
+            expect(code1).to.not.equal(code2);
+          });
+      });
+  });
+  it('can leave lobby', () => {
+    cy.get('button').contains('Leave Lobby').click();
+    // same test as clicking logo
+    cy.location().then((location) => {
+      const pathname = location.pathname;
+      expect(pathname).equal('/');
+    });
+  });
   it('can draw', () => {});
-  it('can clear', () => {});
+  it('can clear', () => {
+    cy.get('button').contains('Clear Canvas');
+  });
   it('can change draw settings', () => {});
 });
