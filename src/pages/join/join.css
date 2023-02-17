@@ -19,14 +19,6 @@
   border-radius: 7px;
 }
 
-.join-form button[type='submit']:hover {
-  scale: 1.05;
-}
-
-.join-form button[type='submit']:focus {
-  scale: 1.05;
-}
-
 #randomize-name-button:hover {
   --rotate-deg: 2deg;
   animation: wobble 0.2s ease-in-out 2;

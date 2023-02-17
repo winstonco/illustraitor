@@ -18,15 +18,20 @@ export default function Toolbar(props: {
       alignItems="center"
       justifyContent="center"
     >
-      <Button
-        variant="outlined"
+      <button
+        aria-label="clear canvas button"
         onClick={() => {
           CanvasDrawer.clearCanvas();
           socket.emit('clearCanvas');
         }}
       >
-        Clear Canvas
-      </Button>
+        <img
+          src="clear-canvas.svg"
+          alt="clear canvas button"
+          width="100px"
+          draggable="false"
+        />
+      </button>
       <PenSize setPenSize={props.setPenSize}></PenSize>
       <PenColor color={props.color} setPenColor={props.setPenColor}></PenColor>
     </Stack>

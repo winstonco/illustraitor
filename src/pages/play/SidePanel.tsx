@@ -28,9 +28,6 @@ export default function SidePanel({ playerNames }: { playerNames: string[] }) {
           {playerNames?.map((name) => {
             return <li key={name}>{name}</li>;
           })}
-          {/* <li>Bob</li>
-          <li>Joe</li>
-          <li>Steve</li> */}
         </ul>
       </div>
     </div>

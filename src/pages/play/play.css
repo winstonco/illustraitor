@@ -15,13 +15,17 @@
   font-size: 2rem;
 }
 
+canvas {
+  cursor: url('/pencil.svg'), auto;
+}
+
 .side-panel {
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: absolute;
   top: 0;
-  left: max(calc(50% - 300px - 300px), 0px);
+  left: max(calc(50% - 300px - 300px), 20px);
   height: 100%;
 }
 

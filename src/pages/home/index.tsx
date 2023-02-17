@@ -34,7 +34,7 @@ export default function Home() {
     <Stack gap={'1rem'}>
       <Stack direction="row" gap={'1rem'} justifyContent="center">
         <button
-          className="home-page-button wobble"
+          className="home-page-button hover-scale wobble"
           aria-label="create lobby button"
           onClick={handleCreateLobby}
         >
@@ -46,7 +46,7 @@ export default function Home() {
           />
         </button>
         <button
-          className="home-page-button wobble-reverse"
+          className="home-page-button hover-scale wobble-reverse"
           aria-label="join lobby button"
           onClick={handleJoinLobby}
         >
@@ -58,7 +58,7 @@ export default function Home() {
           />
         </button>
         <button
-          className="home-page-button wobble"
+          className="home-page-button hover-scale wobble"
           aria-label="settings button"
           onClick={handleClickSettings}
         >
@@ -76,9 +76,9 @@ export default function Home() {
           setSettings={setSettings}
         />
       </Stack>
-      <Stack>
-        <Typography variant="h5">Current lobby settings</Typography>
-        <Typography variant="subtitle1">
+      <div>
+        <h1>Current lobby settings:</h1>
+        <h2>
           {GameSettingsKeys.map((key) => {
             let value: any = settings[key];
             switch (key) {
@@ -95,10 +95,10 @@ export default function Home() {
               </p>
             );
           })}
-        </Typography>
+        </h2>
         <Divider />
         <Changelog />
-      </Stack>
+      </div>
     </Stack>
   );
 }

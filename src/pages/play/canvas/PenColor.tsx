@@ -42,15 +42,20 @@ export default function PenColor(props: {
 
   return (
     <>
-      <Button
-        variant="outlined"
+      <button
         ref={button}
+        aria-label="colors button"
         onClick={() => {
           open ? setOpen(false) : setOpen(true);
         }}
       >
-        Select Color
-      </Button>
+        <img
+          src="colors.svg"
+          alt="colors button"
+          width="150px"
+          draggable="false"
+        />
+      </button>
       <Popover
         open={open}
         onClose={() => {

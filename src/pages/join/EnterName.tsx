@@ -54,7 +54,7 @@ export default function EnterName({
           </button>
         </Tooltip>
       </div>
-      <button type="submit" aria-label="play button">
+      <button type="submit" aria-label="play button" className="hover-scale">
         <img
           width="200px"
           src="/play-button.svg"
