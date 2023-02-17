@@ -68,7 +68,13 @@ describe('Create Lobby', () => {
   });
   it('can draw', () => {});
   it('can clear', () => {
-    cy.get('button').contains('Clear Canvas');
+    cy.get('button[aria-label="clear canvas button"]')
+      .should('not.be.disabled')
+      .click();
   });
-  it('can change draw settings', () => {});
+  it('can change draw settings', () => {
+    cy.get('button[aria-label="colors button"]')
+      .should('not.be.disabled')
+      .click();
+  });
 });
