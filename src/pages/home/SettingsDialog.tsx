@@ -11,6 +11,8 @@ import {
   MenuItem,
   SelectChangeEvent,
 } from '@mui/material';
+import { useRef } from 'react';
+
 import GameSettings from '../../types/GameSettings';
 
 export default function SettingsDialog({
@@ -24,6 +26,8 @@ export default function SettingsDialog({
   settings: GameSettings;
   setSettings: React.Dispatch<React.SetStateAction<GameSettings>>;
 }) {
+  const numRoundsInputRef = useRef<HTMLInputElement>(null);
+
   const handleClose = () => {
     setSettingsIsOpen(false);
   };
@@ -56,8 +60,7 @@ export default function SettingsDialog({
               alignItems={'center'}
             >
               <p>{'Turn Length'}</p>
-              <TextField
-                margin={'normal'}
+              <input
                 type={'number'}
                 onChange={(e) => {
                   setSettings({
@@ -65,11 +68,9 @@ export default function SettingsDialog({
                     'Turn Length': parseInt(e.target.value),
                   });
                 }}
-                inputProps={{
-                  min: 5,
-                  max: 30,
-                  defaultValue: settings['Turn Length'],
-                }}
+                min={5}
+                max={30}
+                defaultValue={settings['Turn Length']}
               />
             </Stack>
             <Stack
@@ -79,8 +80,7 @@ export default function SettingsDialog({
               alignItems={'center'}
             >
               <p>{'Guess Time'}</p>
-              <TextField
-                margin={'normal'}
+              <input
                 type={'number'}
                 onChange={(e) => {
                   setSettings({
@@ -88,11 +88,9 @@ export default function SettingsDialog({
                     'Guess Time': parseInt(e.target.value),
                   });
                 }}
-                inputProps={{
-                  min: 5,
-                  max: 30,
-                  defaultValue: settings['Guess Time'],
-                }}
+                min={5}
+                max={30}
+                defaultValue={settings['Guess Time']}
               />
             </Stack>
             <Stack
@@ -102,21 +100,44 @@ export default function SettingsDialog({
               alignItems={'center'}
             >
               <p>{'Imposter Count'}</p>
-              <TextField
-                margin={'normal'}
+              <input
+                type={'number'}
+                onChange={(e) => {
+                  setSettings({
+                    ...settings,
+                    'Imposter Count': parseInt(e.target.value),
+                    'Number of Rounds': numRoundsInputRef.current
+                      ? numRoundsInputRef.current.value
+                        ? parseInt(numRoundsInputRef.current.value)
+                        : parseInt(e.target.value)
+                      : parseInt(e.target.value),
+                  });
+                }}
+                min={1}
+                max={5}
+                defaultValue={settings['Imposter Count']}
+              />
+            </Stack>
+            <Stack
+              direction={'row'}
+              gap={'1rem'}
+              key={'Number of Rounds'}
+              alignItems={'center'}
+            >
+              <p>{'Number of Rounds'}</p>
+              <input
+                ref={numRoundsInputRef}
                 type={'number'}
                 onChange={(e) => {
                   setSettings({
                     ...settings,
                     'Number of Rounds': parseInt(e.target.value),
-                    'Imposter Count': parseInt(e.target.value),
                   });
                 }}
-                inputProps={{
-                  min: 1,
-                  max: 5,
-                  defaultValue: settings['Imposter Count'],
-                }}
+                min={1}
+                max={10}
+                placeholder={`${settings['Imposter Count']}`}
+                defaultValue={settings['Number of Rounds']}
               />
             </Stack>
             <Stack

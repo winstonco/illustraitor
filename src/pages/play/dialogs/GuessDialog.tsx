@@ -57,9 +57,9 @@ export default function GuessDialog({
   };
 
   return (
-    <Container>
+    <Container className="dialog">
       <Dialog open={guessDialogOpen}>
-        <DialogTitle>Who is the imposter?</DialogTitle>
+        <DialogTitle>Who is an imposter?</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmitGuess}>
             <FormControl>
@@ -68,7 +68,6 @@ export default function GuessDialog({
                 value={radioValue}
                 onChange={handleChangeGuess}
               >
-                {/* <DialogContentText>Title</DialogContentText> */}
                 {playerNames.map((name) => (
                   <FormControlLabel
                     control={<Radio />}

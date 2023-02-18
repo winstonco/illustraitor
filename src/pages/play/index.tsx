@@ -8,6 +8,7 @@ import { useLobby } from '../../hooks/useLobby';
 import Dialogs from './dialogs/Dialogs';
 import './play.css';
 import SidePanel from './SidePanel';
+import { Alert, Snackbar } from '@mui/material';
 
 export const canvasWidth = 600;
 
@@ -18,7 +19,9 @@ export default function Play() {
   const [currentPlayerName, setCurrentPlayerName] = useState<string>('');
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playerNames, setPlayerNames] = useState<string[]>([]);
-  const { lobbyName, leaveLobby } = useLobby();
+  const [imposterNames, setImposterNames] = useState<string[]>([]);
+  const { lobbyName, createLobby, leaveLobby } = useLobby();
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
 
   useEffect(() => {
     socket.on('playersInLobby', (newPlayerNames) => {
@@ -35,6 +38,10 @@ export default function Play() {
 
       socket.on('role', (role) => {
         setRole(role === 'real' ? 'Real' : 'Imposter');
+      });
+
+      socket.on('imposterList', (imposterList) => {
+        setImposterNames(imposterList);
       });
 
       socket.on('prompt', setPrompt);
@@ -81,6 +88,28 @@ export default function Play() {
     }
   }, []);
 
+  const handleStartGame = () => {
+    if (lobbyName !== '') {
+      socket.emit('startGame', lobbyName, (res) => {
+        if (!res) {
+          setSnackbarOpen(true);
+        }
+      });
+    }
+  };
+
+  const handleCreateLobby = () => {
+    createLobby(settings);
+  };
+
+  const handleLeaveLobby = () => {
+    leaveLobby();
+  };
+
+  const handleCloseAlert = () => {
+    setSnackbarOpen(false);
+  };
+
   return (
     <div style={{ width: canvasWidth }}>
       <GameNav
@@ -92,8 +121,24 @@ export default function Play() {
         settings={settings}
       />
       <Game />
+      <Snackbar
+        open={snackbarOpen}
+        onClose={handleCloseAlert}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert severity="error" onClose={handleCloseAlert}>
+          Not enough players!
+        </Alert>
+      </Snackbar>
       <Dialogs playerNames={playerNames} />
-      <SidePanel playerNames={playerNames} />
+      <SidePanel
+        playerNames={playerNames}
+        imposterNames={imposterNames}
+        currentPlayerName={currentPlayerName}
+        handleStartGame={handleStartGame}
+        handleCreateLobby={handleCreateLobby}
+        handleLeaveLobby={handleLeaveLobby}
+      />
     </div>
   );
 }

@@ -37,9 +37,8 @@ export default function VoteEndDialog() {
   };
 
   return (
-    <Container>
+    <Container className="dialog">
       <Dialog open={voteEndDialogOpen} onClose={handleCloseVoteEndDialog}>
-        <DialogTitle>Voting Over</DialogTitle>
         <DialogContent>
           {majorityVote ? (
             <>

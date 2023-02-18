@@ -23,6 +23,22 @@ meta: { about: 'A party game where everyone is an artist,
 versions:
   [
     {
+      version: 3.4.0,
+      updates:
+        [
+          {
+            type: 'Added',
+            list:
+              [
+                'Number of Rounds setting',
+                'Paintbrush icon to show current drawer',
+                'Imposters can see the names of other imposters',
+              ],
+          },
+          { type: 'Changed', list: ['Pencil cursor replaced with paintbrush'] },
+        ],
+    },
+    {
       version: 3.3.0,
       updates:
         [
@@ -30,7 +46,7 @@ versions:
             type: 'Added',
             list:
               [
-                'Pen cursor when mouse is on the canvas',
+                'Pencil cursor when mouse is on the canvas',
                 'Clear canvas button',
                 'Colors dropdown button',
               ],

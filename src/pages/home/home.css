@@ -1,7 +1,28 @@
 #changelog {
   background: #f2f2f2;
-  margin-top: 1rem;
-  padding-left: 1rem;
+  padding: 1rem;
+}
+
+#changelog * {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.lobby-settings * {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.lobby-settings h2 {
+  font-size: 1.5em;
+  text-decoration: underline;
+}
+
+.lobby-settings ul {
+  padding-left: 20px;
+}
+
+.lobby-settings li {
+  font-size: 1em;
+  line-height: 1.5em;
 }
 
 .home-page-button {

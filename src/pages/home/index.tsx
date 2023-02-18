@@ -77,26 +77,24 @@ export default function Home() {
         />
       </Stack>
       <div>
-        <h1>Current lobby settings:</h1>
-        <h2>
-          {GameSettingsKeys.map((key) => {
-            let value: any = settings[key];
-            switch (key) {
-              case 'Number of Rounds':
-                value = 'Default';
-                break;
-              case 'Custom Prompts':
-                if (settings[key]?.length === 0) value = 'None';
-                break;
-            }
-            return (
-              <p key={key}>
-                {key}: {value}
-              </p>
-            );
-          })}
-        </h2>
-        <Divider />
+        <div className="lobby-settings">
+          <h2>Current lobby settings:</h2>
+          <ul>
+            {GameSettingsKeys.map((key) => {
+              let value: any = settings[key];
+              switch (key) {
+                case 'Custom Prompts':
+                  if (settings[key]?.length === 0) value = 'None';
+                  break;
+              }
+              return (
+                <li key={key}>
+                  {key}: {value}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
         <Changelog />
       </div>
     </Stack>

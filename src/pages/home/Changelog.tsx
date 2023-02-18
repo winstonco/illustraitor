@@ -82,10 +82,10 @@ export default function Changelog() {
   return (
     <>
       <div id="changelog">
-        <Typography variant="h5" marginTop={'1rem'} marginBottom={'0.5rem'}>
+        <Typography variant="h5" marginBottom={'0.5rem'}>
           Changelog:
         </Typography>
-        <div style={{ fontFamily: 'sans-serif' }}>{log}</div>
+        <div>{log}</div>
       </div>
     </>
   );

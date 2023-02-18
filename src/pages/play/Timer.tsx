@@ -1,4 +1,3 @@
-import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 
 import socket from '../../helpers/getSocket';
@@ -39,5 +38,5 @@ export default function Timer(): JSX.Element {
     }
   }, [time]);
 
-  return <span className="timer">Time Left: {time}</span>;
+  return <span className="timer">{time}</span>;
 }

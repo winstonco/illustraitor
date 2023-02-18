@@ -33,9 +33,8 @@ export default function GameEndDialog() {
   };
 
   return (
-    <Container>
+    <Container className="dialog">
       <Dialog open={gameEndDialogOpen} onClose={handleCloseGameEndDialog}>
-        <DialogTitle>Game Over</DialogTitle>
         <DialogContent>
           <h3>Imposter(s) Found:</h3>
           {impostersFound.map((imposter) => (
