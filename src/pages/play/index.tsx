@@ -46,7 +46,9 @@ export default function Play() {
 
       socket.on('prompt', setPrompt);
 
-      socket.on('startTurnAll', setCurrentPlayerName);
+      socket.on('startTurnAll', (currentPlayerName, turnTime) =>
+        setCurrentPlayerName(currentPlayerName)
+      );
 
       socket.on('startTurn', () => {
         console.log("It's your turn!");
@@ -60,7 +62,7 @@ export default function Play() {
     socket.on('endGame', () => {
       console.log('Game ending!');
       setIsPlaying(false);
-      // setPlayerNames([]);
+      setImposterNames([]);
       setCurrentPlayerName('');
       setRole('');
       setPrompt('');

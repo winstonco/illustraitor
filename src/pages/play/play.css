@@ -26,8 +26,7 @@ canvas {
   position: absolute;
   top: 50%;
   transform: translate(0%, -50%);
-  left: max(calc(50% - 300px - 300px), 20px);
-  /* left: calc(50% - 300px - 300px); */
+  right: calc(50% + 300px + 20px);
 }
 
 .side-panel-content {
@@ -86,10 +85,6 @@ canvas {
 .side-panel-content .lobby-button:hover {
   background-color: rgb(129, 141, 248);
   z-index: 1;
-}
-
-#your-name {
-  /* text-decoration: dotted underline green; */
 }
 
 .imposter {

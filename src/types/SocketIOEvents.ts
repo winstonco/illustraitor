@@ -18,7 +18,7 @@ interface ServerToClientEvents extends IGlobalGameEvents {
   imposterList: (imposterList: string[]) => void;
   prompt: (prompt: string) => void;
   startRound: () => void;
-  startTurnAll: (currentPlayerName: string) => void;
+  startTurnAll: (currentPlayerName: string, turnTime: number) => void;
   startTurn: (turnTime: number) => void;
   endTurn: () => void;
   guessImposter: (
@@ -63,6 +63,7 @@ interface SocketData {
   lobbyIndex: number;
   canDraw: boolean;
   name: string;
+  loaded: boolean;
 }
 
 export type {

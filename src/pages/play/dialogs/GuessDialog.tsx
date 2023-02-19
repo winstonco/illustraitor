@@ -23,7 +23,6 @@ export default function GuessDialog({
 
   useEffect(() => {
     socket.on('guessImposter', async (guessTime, callback) => {
-      console.log('guess imposter');
       setGuessDialogOpen(true);
       const guess = await new Promise<string>((res) => {
         setTimeout(() => {

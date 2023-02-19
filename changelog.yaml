@@ -23,6 +23,24 @@ meta: { about: 'A party game where everyone is an artist,
 versions:
   [
     {
+      version: 3.4.1,
+      updates:
+        [
+          {
+            type: 'Changed',
+            list:
+              [
+                'All players can see turn time',
+                'Imposter name list gets cleared when game ends',
+              ],
+          },
+          {
+            type: 'Fixed',
+            list: ["Bug where timer doesn't start for the first turn"],
+          },
+        ],
+    },
+    {
       version: 3.4.0,
       updates:
         [

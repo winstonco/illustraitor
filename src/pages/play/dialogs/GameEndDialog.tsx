@@ -37,9 +37,11 @@ export default function GameEndDialog() {
       <Dialog open={gameEndDialogOpen} onClose={handleCloseGameEndDialog}>
         <DialogContent>
           <h3>Imposter(s) Found:</h3>
-          {impostersFound.map((imposter) => (
-            <p key={imposter}>{imposter}</p>
-          ))}
+          {impostersFound.length === 0 ? (
+            <p key="none">None</p>
+          ) : (
+            impostersFound.map((imposter) => <p key={imposter}>{imposter}</p>)
+          )}
           {winners === 'real' ? (
             <h3>Real Artists Win!</h3>
           ) : (

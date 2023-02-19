@@ -12,7 +12,7 @@ export default function Timer(): JSX.Element {
   };
 
   useEffect(() => {
-    socket.on('startTurn', (turnTime) => {
+    socket.on('startTurnAll', (currentPlayerName, turnTime) => {
       startTimer(turnTime);
     });
 
